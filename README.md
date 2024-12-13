@@ -11,7 +11,7 @@ The Spectral Bridge algorithm is implemented both in
 - R: <https://github.com/cambroise/spectral-bridges-Rpackage>.
 
 [![](https://img.shields.io/github/last-commit/computorg/published-202412-ambroise-spectral.svg)](https://github.com/computorg/published-202412-ambroise-spectral/commits/main)
-[![DOI:xxx/xxx-xxx](https://img.shields.io/badge/DOI-10.57750/1gr8-bk61.svg)](https://doi.org/DOI-10.57750/1gr8-bk61)
+[![DOI:xxx/xxx-xxx](https://img.shields.io/badge/DOI-10.57750/1gr8-bk61.svg)](https://doi.org/10.57750/1gr8-bk61)
 [![HTML](https://img.shields.io/badge/article-HTML-034E79)](https://computo.sfds.asso.fr/published-202412-ambroise-spectral/)
 [![PDF](https://img.shields.io/badge/article-PDF-034E79)](https://computo.sfds.asso.fr/published-202412-ambroise-spectral/published-202412-ambroise-spectral.pdf)
 [![reviews](https://img.shields.io/badge/review-report%201-blue)](https://github.com/computorg/published-202412-ambroise-spectral/issues/2)
