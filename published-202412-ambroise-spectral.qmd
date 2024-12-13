@@ -1,6 +1,5 @@
 ---
 title: "Spectral Bridges"
-subtitle: "Scalable Spectral Clustering Based on Vector Quantization"
 date: 12-13-2024
 date-modified: last-modified
 author:
@@ -25,12 +24,7 @@ author:
         city: Évry-Courcouronnes
         country: France
         url: http://www.math-evry.cnrs.fr/
-description: | 
-  In this paper, Spectral Bridges, a novel clustering algorithm, is introduced. This algorithm builds upon the traditional k-means and spectral clustering frameworks by subdividing data into small Voronoï regions, which are subsequently merged according to a connectivity measure. Drawing inspiration from Support Vector Machine's margin concept, a non-parametric clustering approach is proposed, building an affinity margin between each pair of Voronoï regions. This approach delineates intricate, non-convex cluster structures and is robust to hyperparameter choice.
-  
-  The numerical experiments underscore Spectral Bridges as a fast, robust, and versatile tool for  clustering tasks spanning diverse domains. Its efficacy extends to large-scale scenarios encompassing both real-world and synthetic datasets. 
-  
-  The Spectral Bridge algorithm is implemented both in Python (<https://pypi.org/project/spectral-bridges>) and R <https://github.com/cambroise/spectral-bridges-Rpackage>).
+description: Scalable Spectral Clustering Based on Vector Quantization
 abstract: >+
   In this paper, Spectral Bridges, a novel clustering algorithm, is introduced. This algorithm builds upon the traditional k-means and spectral clustering frameworks by subdividing data into small Voronoï regions, which are subsequently merged according to a connectivity measure. Drawing inspiration from Support Vector Machine's margin concept, a non-parametric clustering approach is proposed, building an affinity margin between each pair of Voronoï regions. This approach delineates intricate, non-convex cluster structures and is robust to hyperparameter choice.
 
