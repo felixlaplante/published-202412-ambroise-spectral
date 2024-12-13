@@ -47,8 +47,8 @@ citation:
   issn: "2824-7795"
 bibliography: references.bib
 google-scholar: true
-github-user: published-202412-ambroise-spectral
-repo: "spectral-bridges"
+github-user: computorg
+repo: "published-202412-ambroise-spectral"
 draft: false # set to false once the build is running
 published: true # will be set to true once accepted
 format:
