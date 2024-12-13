@@ -1,7 +1,7 @@
 project:
-  title: "spectral-bridges"
+  title: "Spectral Bridges"
   render:
-    - "spectral-bridges.qmd"
+    - "published-202412-ambroise-spectral.qmd"
 
 
 
