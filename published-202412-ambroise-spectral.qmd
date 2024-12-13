@@ -12,7 +12,8 @@ author:
         address: 23 boulevard de France
         city: Évry-Courcouronnes
         country: France
-        url: http://www.math-evry.cnrs.fr/  - name: Christophe Ambroise
+        url: http://www.math-evry.cnrs.fr/
+  - name: Christophe Ambroise
     corresponding: true
     email: christophe.ambroise@univ-evry.fr
     url: https://cambroise.github.io/
