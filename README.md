@@ -11,7 +11,7 @@ Spectral Bridges is a clustering algorithm that  builds upon the traditional k-m
 
 The Spectral Bridge algorithm is implemented both in 
 
-- Python: <https://pypi.org/project/spectral-bridges/>
+- Python: <https://pypi.org/project/spectral-bridges>
 - R: <https://github.com/cambroise/spectral-bridges-Rpackage>.
 
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/computorg/published-202412-ambroise-spectral/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/computorg/published-202412-ambroise-spectral)
