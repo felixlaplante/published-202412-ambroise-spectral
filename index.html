@@ -506,7 +506,7 @@ a_{p, kl} =
 <h2 data-number="3.2" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">3.2</span> Algorithm</h2>
 <p>The Spectral Bridges algorithm first identifies local clusters to define Voronoï regions, computes edges with affinity weights between these regions, and ultimately cuts edges between regions with low inter-region density to determine the final clusters (see <a href="#alg-spectral-bridges" class="quarto-xref">Algorithm 1</a> and <a href="#fig-steps" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>In spectral clustering, the time complexity is usually dominated by the eigendecomposition step, which is <span class="math inline">O(n^3)</span>. However, in the case of Spectral Bridges, the k-means algorithm has a time complexity of <span class="math inline">O(n \times m \times d)</span>. For datasets with large <span class="math inline">n</span>, this can be more significant than the <span class="math inline">O(m^3)</span> time complexity of the Spectral Bridges eigendecomposition. As for the affinity matrix construction, there are <span class="math inline">m^2</span> coefficients to be calculated. Each <span class="math inline">a_{kl}</span> coefficient requires the computation of <span class="math inline">n_k + n_l</span> dot products as well as the norm <span class="math inline">\| \boldsymbol \mu_k-\boldsymbol \mu_l \|</span>, the latter often being negligeable. Assuming that the Voronoï regions are roughly balanced in cardinality, we have <span class="math inline">n_k \approx \frac{n}{m}</span>. Since <span class="math inline">m</span> should always be less than <span class="math inline">n</span>, therefore <span class="math inline">\frac{n}{m} &gt; 1</span> and the time complexity of the affinity matrix is <span class="math inline">O(\frac{n}{m} \times m^2 \times d) = O(n \times m \times d)</span> given the acceptable range of values for <span class="math inline">m</span>. Nonetheless, this is rarely the bottleneck.</p>
-<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="1" data-indent-size="1.2em" data-no-end="false" data-caption-prefix="Algorithm" data-line-number-punc=":" data-comment-delimiter="//">
+<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Spectral Bridges} \begin{algorithmic} \Procedure{SpectralBridges}{$X, k, m$} \Comment{$X$: input dataset, $k$: number of clusters, $m$: number of Voronoï regions} \State \textbf{Step 1: Vector Quantization} \State $\text{centroids}, \text{voronoiRegions} \gets$ \Call{KMeans}{$X, m$} \Comment{Initial centroids and Voronoi regions using k-means++} \State \textbf{Step 2: Affinity Computation} \State $A = \{g(a_{kl})\}_{kl} \gets$ \Call{Affinity}{$X, \text{centroids}, \text{voronoiRegions}$} \Comment{Compute affinity matrix $A$} \State \textbf{Step 3: Spectral Clustering} \Comment{Assign each region to a cluster} \State $\text{labels} \gets$ \Call{SpectralClustering}{$A, k$} \State \textbf{Step 4: Propagate} \Comment{Assign each data point to the cluster of its region} \State $\text{clusters} \gets$ \Call{Propagate}{$X, \text{labels}, \text{voronoiRegions}$} \State \Return $\text{clusters}$ \Comment{Return cluster labels for data points in $X$} \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -1015,10 +1015,10 @@ Figure&nbsp;8: UMAP projection of predicted clusters against the ground truth la
 </figure>
 </div>
 <p>The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn’s UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see <a href="#fig-cancer-scores" class="quarto-xref">Figure&nbsp;9</a>). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.</p>
-<div id="fig-cancer-scores" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-cancer-scores" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cancer-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<embed src="figures/cancer_summary.pdf" class="img-fluid">
+<embed src="figures/cancer_summary.pdf" class="img-fluid" data-fig-pos="h">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cancer-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9: ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.
@@ -1070,10 +1070,10 @@ Figure&nbsp;10: Four toy datasets.
 </figure>
 </div>
 <p>Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN’s parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.</p>
-<div id="fig-synthetic-scores" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-synthetic-scores" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-synthetic-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<embed src="figures/synthetic_summary.pdf" class="img-fluid">
+<embed src="figures/synthetic_summary.pdf" class="img-fluid" data-fig-pos="h">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-synthetic-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;11: ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.
@@ -1965,7 +1965,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>The basic idea involves calculating the difference in inertia achieved by projecting onto a segment connecting two centroids, rather than using the two centroids separately (see @fig-balls-bridge). If the difference is small, it suggests a low density between the classes. Conversely, if this difference is large, it indicates that the two classes may reside within the same densely populated region.</span>
 <span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>::: {#fig-balls-bridge layout-ncol=2}</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>::: {#fig-balls-bridge layout-ncol=2 fig-pos='h'}</span>
 <span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="al">![](figures/balls.pdf)</span>{width=50%}</span>
 <span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="al">![](figures/bridge.pdf)</span>{width=50%}</span>
@@ -2044,7 +2044,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>$\alpha_i$ or $\alpha_i^2$ increases with the density of the region</span>
 <span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>between the classes (See Figure @fig-interpretation). </span>
 <span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>::: {#fig-interpretation layout-ncol=2}</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>::: {#fig-interpretation layout-ncol=2 fig-pos='h'}</span>
 <span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="al">![Margin with close centroids](figures/svm-interpretation-3.pdf)</span></span>
 <span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="al">![Density of the $\alpha_i$ for close centroids](figures/histo-alphai-3.pdf)</span></span>
@@ -2141,7 +2141,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
 <span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>::: {#fig-steps layout-ncol=3}</span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>::: {#fig-steps layout-ncol=3 fig-pos='h'}</span>
 <span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="al">![Vector quantization](figures/spectral-briges-1.pdf)</span></span>
 <span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="al">![Affinity computation](figures/spectral-briges-2.pdf)</span></span>
@@ -2241,7 +2241,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a>To assess the algorithm's time complexity, the average execution times over 50 runs were computed for varying numbers of Voronoï regions $m$ as well as dataset sizes. With a constant number of clusters $K = 5$ and an embedding dimension of $d = 10$, the results (see @fig-time-complexity) highlight Spectral Bridges algorithm's efficacy. As discussed previously, we observe a linear relationship between $m$ and the execution time because the matrix construction is highly optimized and the time taken is almost negligeable compared to that of the initial k-means++ centroids initalization.</span>
 <span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a>::: {#fig-time-complexity layout-ncol=2}</span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a>::: {#fig-time-complexity layout-ncol=2 fig-pos='h'}</span>
 <span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a><span class="al">![Varying $n$, fixed $m = 10$](figures/size_vs_time.pdf)</span></span>
 <span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a></span>
@@ -2258,7 +2258,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a>Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was tested both on the raw MNIST dataset without preprocessing ($h = 784$) and after reducing its dimension using PCA to $h \in <span class="sc">\{</span>8, 16, 32, 64<span class="sc">\}</span>$ (see @fig-mnist-pca-scores).</span>
 <span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-pca-scores layout-nrow=2}</span>
+<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-pca-scores layout-nrow=2 fig-pos='h'}</span>
 <span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)</span>{#fig-mnist-pca-scores}</span>
 <span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | h = 8          | h = 16         | h = 32         | h = 64         | h = 784 (full) |</span>
@@ -2279,7 +2279,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a>Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in <span class="sc">\{</span>2, 4, 8, 16<span class="sc">\}</span>$ using UMAP <span class="co">[</span><span class="ot">@McInnes2018</span><span class="co">]</span>, a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).</span>
 <span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-umap-scores layout-nrow=2}</span>
+<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-umap-scores layout-nrow=2 fig-pos='h'}</span>
 <span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)</span>{#fig-mnist-umap-scores}</span>
 <span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | h = 2          | h = 4          | h = 8          | h = 16         |</span>
@@ -2302,7 +2302,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a>For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and 500 Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.</span>
 <span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a>::: {#fig-MNIST layout-ncol=3}</span>
+<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a>::: {#fig-MNIST layout-ncol=3 fig-pos='h'}</span>
 <span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a><span class="al">![k-means++](figures/KMumap.pdf)</span></span>
 <span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a></span>
@@ -2315,11 +2315,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a>The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn's UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see @fig-cancer-scores). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.</span>
 <span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)</span>{#fig-cancer-scores}</span>
+<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)</span>{#fig-cancer-scores fig-pos='h'}</span>
 <span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.</span>
 <span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a>::: {#fig-toy-datasets layout-ncol=4}</span>
+<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a>::: {#fig-toy-datasets layout-ncol=4 fig-pos='h'}</span>
 <span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a><span class="al">![Impossible](figures/impossible.pdf)</span></span>
 <span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a></span>
@@ -2334,7 +2334,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a>Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN's parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.</span>
 <span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)</span>{#fig-synthetic-scores}</span>
+<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)</span>{#fig-synthetic-scores fig-pos='h'}</span>
 <span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a><span class="fu">## Noise robustness</span></span>
@@ -2342,7 +2342,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>To evaluate the noise robustness of the algorithm, two experimental setups were devised: one involved introducing Gaussian-distributed perturbations to the data, and the other involved concatenating uniformly distributed points within a predefined rectangular region (determined by the span of the dataset) to the existing dataset. As illustrated in @fig-noise-robustness, the tests demonstrate that in both scenarios, the algorithm exhibits a high degree of insensitivity to noise.</span>
 <span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a>::: {#fig-noise-robustness layout-ncol=3}</span>
+<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a>::: {#fig-noise-robustness layout-ncol=3 fig-pos='h'}</span>
 <span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a><span class="al">![Clean](figures/clean_impossible.pdf)</span></span>
 <span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a></span>
