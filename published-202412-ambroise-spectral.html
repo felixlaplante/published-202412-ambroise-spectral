@@ -506,7 +506,7 @@ a_{p, kl} =
 <h2 data-number="3.2" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">3.2</span> Algorithm</h2>
 <p>The Spectral Bridges algorithm first identifies local clusters to define Voronoï regions, computes edges with affinity weights between these regions, and ultimately cuts edges between regions with low inter-region density to determine the final clusters (see <a href="#alg-spectral-bridges" class="quarto-xref">Algorithm 1</a> and <a href="#fig-steps" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>In spectral clustering, the time complexity is usually dominated by the eigendecomposition step, which is <span class="math inline">O(n^3)</span>. However, in the case of Spectral Bridges, the k-means algorithm has a time complexity of <span class="math inline">O(n \times m \times d)</span>. For datasets with large <span class="math inline">n</span>, this can be more significant than the <span class="math inline">O(m^3)</span> time complexity of the Spectral Bridges eigendecomposition. As for the affinity matrix construction, there are <span class="math inline">m^2</span> coefficients to be calculated. Each <span class="math inline">a_{kl}</span> coefficient requires the computation of <span class="math inline">n_k + n_l</span> dot products as well as the norm <span class="math inline">\| \boldsymbol \mu_k-\boldsymbol \mu_l \|</span>, the latter often being negligeable. Assuming that the Voronoï regions are roughly balanced in cardinality, we have <span class="math inline">n_k \approx \frac{n}{m}</span>. Since <span class="math inline">m</span> should always be less than <span class="math inline">n</span>, therefore <span class="math inline">\frac{n}{m} &gt; 1</span> and the time complexity of the affinity matrix is <span class="math inline">O(\frac{n}{m} \times m^2 \times d) = O(n \times m \times d)</span> given the acceptable range of values for <span class="math inline">m</span>. Nonetheless, this is rarely the bottleneck.</p>
-<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-line-number-punc=":" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true" data-indent-size="1.2em" data-no-end="false">
+<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-line-number="true" data-caption-prefix="Algorithm" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Spectral Bridges} \begin{algorithmic} \Procedure{SpectralBridges}{$X, k, m$} \Comment{$X$: input dataset, $k$: number of clusters, $m$: number of Voronoï regions} \State \textbf{Step 1: Vector Quantization} \State $\text{centroids}, \text{voronoiRegions} \gets$ \Call{KMeans}{$X, m$} \Comment{Initial centroids and Voronoi regions using k-means++} \State \textbf{Step 2: Affinity Computation} \State $A = \{g(a_{kl})\}_{kl} \gets$ \Call{Affinity}{$X, \text{centroids}, \text{voronoiRegions}$} \Comment{Compute affinity matrix $A$} \State \textbf{Step 3: Spectral Clustering} \Comment{Assign each region to a cluster} \State $\text{labels} \gets$ \Call{SpectralClustering}{$A, k$} \State \textbf{Step 4: Propagate} \Comment{Assign each data point to the cluster of its region} \State $\text{clusters} \gets$ \Call{Propagate}{$X, \text{labels}, \text{voronoiRegions}$} \State \Return $\text{clusters}$ \Comment{Return cluster labels for data points in $X$} \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -717,7 +717,7 @@ Figure&nbsp;5: Average time taken per model fit.
 <embed src="figures/mnist_pca_summary.pdf" class="img-fluid" data-ref-parent="fig-mnist-pca-scores">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mnist-pca-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on PCA embedded and full MNIST.
+(a) ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).
 </figcaption>
 </figure>
 </div>
@@ -859,7 +859,7 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <embed src="figures/mnist_umap_summary.pdf" class="img-fluid" data-ref-parent="fig-mnist-umap-scores">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mnist-umap-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple) on UMAP embedded MNIST.
+(a) ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).
 </figcaption>
 </figure>
 </div>
@@ -2260,7 +2260,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a>Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was tested both on the raw MNIST dataset without preprocessing ($h = 784$) and after reducing its dimension using PCA to $h \in <span class="sc">\{</span>8, 16, 32, 64<span class="sc">\}</span>$ (see @fig-mnist-pca-scores).</span>
 <span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-pca-scores layout-nrow=2}</span>
-<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on PCA embedded and full MNIST.](figures/mnist_pca_summary.pdf)</span>{#fig-mnist-pca-scores}</span>
+<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)</span>{#fig-mnist-pca-scores}</span>
 <span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | h = 8          | h = 16         | h = 32         | h = 64         | h = 784 (full) |</span>
 <span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a>|---------|-----------|----------------|----------------|----------------|----------------|----------------|</span>
@@ -2281,7 +2281,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in <span class="sc">\{</span>2, 4, 8, 16<span class="sc">\}</span>$ using UMAP <span class="co">[</span><span class="ot">@McInnes2018</span><span class="co">]</span>, a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).</span>
 <span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-umap-scores layout-nrow=2}</span>
-<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple) on UMAP embedded MNIST.](figures/mnist_umap_summary.pdf)</span>{#fig-mnist-umap-scores}</span>
+<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)</span>{#fig-mnist-umap-scores}</span>
 <span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | h = 2          | h = 4          | h = 8          | h = 16         |</span>
 <span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a>|---------|-----------|----------------|----------------|----------------|----------------|</span>
