@@ -400,7 +400,7 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)
 
-| Metric  | Algorithm | $h = 8$           | $h = 16$          | $h = 32$          | $h = 64$          | $h = 784$ (full)  |
+| Metric  | Algorithm | h = 8             | h = 16            | h = 32            | h = 64            | h = 784 (full)    |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|
 | **ARI** | KM        | $0.3661$          | $0.3701$          | $0.3794$          | $0.3740$          | $0.3665$          |
 |         | EM        | $0.4672$          | $0.5081$          | $0.4826$          | $0.4422$          | $0.1850$          |
@@ -422,7 +422,7 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)
 
-| Metric  | Algorithm | $h = 2$           | $h = 4$           | $h = 8$           | $h = 16$          |
+| Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
 | **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |
 |         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |
