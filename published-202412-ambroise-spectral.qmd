@@ -410,7 +410,7 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 |         | GIT       | 0.5110         | 0.5720         | 0.4227         | 0.3314         | 0.4297         |
 |         | SB        | **0.6592**     | **0.7616**     | **0.7895**     | **0.7846**     | **0.7628**     |
 
-Table: Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
 :::
 
 Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
@@ -431,7 +431,7 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 |         | GIT       | 0.9081         | 0.9172         | 0.9183         | 0.9184         |
 |         | SB        | **0.9182**     | **0.9198**     | **0.9125**     | **0.9214**     |
 
-Table: Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
 :::
 
 Note the Spectral Bridges is substantially better than other traditional methods and shines even with quite simple dimension reduction algorithms.
