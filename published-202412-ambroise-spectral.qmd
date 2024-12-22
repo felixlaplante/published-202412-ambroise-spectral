@@ -417,16 +417,17 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 
 | Metric  | Algorithm | h = 2          | h = 4          | h = 8          | h = 16         |
 |---------|-----------|----------------|----------------|----------------|----------------|
-| **ARI** | KM        | 0.8154         | 0.7971         | 0.7985         | 0.8160         |
+| \textbf{ARI} | KM        | 0.8154         | 0.7971         | 0.7985         | 0.8160         |
 |         | EM        | 0.8670         | 0.8828         | 0.8494         | 0.8359         |
 |         | WC        | 0.9008         | 0.8015         | 0.8004         | 0.8105         |
 |         | GIT       | 0.9141         | 0.9298         | 0.9297         | 0.9289         |
-|         | SB        | **0.9304**     | **0.9318**     | **0.9315**     | **0.9332**     |
-| **NMI** | KM        | 0.8664         | 0.8586         | 0.8574         | 0.8641         |
+|         | SB        | \textbf{0.9304} | \textbf{0.9318} | \textbf{0.9315} | \textbf{0.9332} |
+| \midrule
+| \textbf{NMI} | KM        | 0.8664         | 0.8586         | 0.8574         | 0.8641         |
 |         | EM        | 0.8908         | 0.9025         | 0.8916         | 0.8826         |
 |         | WC        | 0.9047         | 0.8733         | 0.8721         | 0.8785         |
 |         | GIT       | 0.9081         | 0.9172         | 0.9183         | 0.9184         |
-|         | SB        | **0.9182**     | **0.9198**     | **0.9125**     | **0.9214**     |
+|         | SB        | \textbf{0.9182} | \textbf{0.9198} | \textbf{0.9125} | \textbf{0.9214} |
 
 Table: Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
 
