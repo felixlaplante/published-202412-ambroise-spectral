@@ -506,7 +506,7 @@ a_{p, kl} =
 <h2 data-number="3.2" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">3.2</span> Algorithm</h2>
 <p>The Spectral Bridges algorithm first identifies local clusters to define Voronoï regions, computes edges with affinity weights between these regions, and ultimately cuts edges between regions with low inter-region density to determine the final clusters (see <a href="#alg-spectral-bridges" class="quarto-xref">Algorithm 1</a> and <a href="#fig-steps" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>In spectral clustering, the time complexity is usually dominated by the eigendecomposition step, which is <span class="math inline">O(n^3)</span>. However, in the case of Spectral Bridges, the k-means algorithm has a time complexity of <span class="math inline">O(n \times m \times d)</span>. For datasets with large <span class="math inline">n</span>, this can be more significant than the <span class="math inline">O(m^3)</span> time complexity of the Spectral Bridges eigendecomposition. As for the affinity matrix construction, there are <span class="math inline">m^2</span> coefficients to be calculated. Each <span class="math inline">a_{kl}</span> coefficient requires the computation of <span class="math inline">n_k + n_l</span> dot products as well as the norm <span class="math inline">\| \boldsymbol \mu_k-\boldsymbol \mu_l \|</span>, the latter often being negligeable. Assuming that the Voronoï regions are roughly balanced in cardinality, we have <span class="math inline">n_k \approx \frac{n}{m}</span>. Since <span class="math inline">m</span> should always be less than <span class="math inline">n</span>, therefore <span class="math inline">\frac{n}{m} &gt; 1</span> and the time complexity of the affinity matrix is <span class="math inline">O(\frac{n}{m} \times m^2 \times d) = O(n \times m \times d)</span> given the acceptable range of values for <span class="math inline">m</span>. Nonetheless, this is rarely the bottleneck.</p>
-<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-line-number="true" data-pseudocode-number="1" data-caption-prefix="Algorithm">
+<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Spectral Bridges} \begin{algorithmic} \Procedure{SpectralBridges}{$X, k, m$} \Comment{$X$: input dataset, $k$: number of clusters, $m$: number of Voronoï regions} \State \textbf{Step 1: Vector Quantization} \State $\text{centroids}, \text{voronoiRegions} \gets$ \Call{KMeans}{$X, m$} \Comment{Initial centroids and Voronoi regions using k-means++} \State \textbf{Step 2: Affinity Computation} \State $A = \{g(a_{kl})\}_{kl} \gets$ \Call{Affinity}{$X, \text{centroids}, \text{voronoiRegions}$} \Comment{Compute affinity matrix $A$} \State \textbf{Step 3: Spectral Clustering} \Comment{Assign each region to a cluster} \State $\text{labels} \gets$ \Call{SpectralClustering}{$A, k$} \State \textbf{Step 4: Propagate} \Comment{Assign each data point to the cluster of its region} \State $\text{clusters} \gets$ \Call{Propagate}{$X, \text{labels}, \text{voronoiRegions}$} \State \Return $\text{clusters}$ \Comment{Return cluster labels for data points in $X$} \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -724,22 +724,22 @@ Figure&nbsp;5: Average time taken per model fit.
 <table class="caption-top table">
 <colgroup>
 <col style="width: 7%">
-<col style="width: 9%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Metric</th>
 <th style="text-align: left;">Algorithm</th>
-<th style="text-align: left;"><span class="math inline">h = 8</span></th>
-<th style="text-align: left;"><span class="math inline">h = 16</span></th>
-<th style="text-align: left;"><span class="math inline">h = 32</span></th>
-<th style="text-align: left;"><span class="math inline">h = 64</span></th>
-<th style="text-align: left;"><span class="math inline">h = 784</span> (full)</th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 8}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 16}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 32}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 64}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 784}</span> (full)</th>
 </tr>
 </thead>
 <tbody>
@@ -872,10 +872,10 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <tr class="header">
 <th style="text-align: left;">Metric</th>
 <th style="text-align: left;">Algorithm</th>
-<th style="text-align: left;"><span class="math inline">h = 2</span></th>
-<th style="text-align: left;"><span class="math inline">h = 4</span></th>
-<th style="text-align: left;"><span class="math inline">h = 8</span></th>
-<th style="text-align: left;"><span class="math inline">h = 16</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 2}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 4}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 8}</span></th>
+<th style="text-align: left;"><span class="math inline">\mathbf{h = 16}</span></th>
 </tr>
 </thead>
 <tbody>
@@ -2462,18 +2462,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)</span></span>
 <span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | $h = 8$           | $h = 16$          | $h = 32$          | $h = 64$          | $h = 784$ (full)  |</span>
-<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|</span>
-<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM        | $0.3661$          | $0.3701$          | $0.3794$          | $0.3740$          | $0.3665$          |</span>
-<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.4672$          | $0.5081$          | $0.4826$          | $0.4422$          | $0.1850$          |</span>
-<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.4123$          | $0.4729$          | $0.4771$          | $0.5043$          | $0.5164$          |</span>
-<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.4162$          | $0.4792$          | $0.3166$          | $0.2347$          | $0.3094$          |</span>
-<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.5789}$ | $\mathbf{0.6875}$ | $\mathbf{0.7110}$ | $\mathbf{0.6983}$ | $\mathbf{0.6619}$ |</span>
-<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM        | $0.4778$          | $0.4899$          | $0.5037$          | $0.4969$          | $0.4915$          |</span>
-<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.6007$          | $0.6462$          | $0.6355$          | $0.5952$          | $0.3252$          |</span>
-<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.5471$          | $0.6340$          | $0.6532$          | $0.6634$          | $0.6648$          |</span>
-<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |</span>
-<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |</span>
+<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | $\mathbf{h = 8}$  | $\mathbf{h = 16}$ | $\mathbf{h = 32}$ | $\mathbf{h = 64}$ | $\mathbf{h = 784}$ (full) |</span>
+<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|---------------------------|</span>
+<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM        | $0.3661$          | $0.3701$          | $0.3794$          | $0.3740$          | $0.3665$                  |</span>
+<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.4672$          | $0.5081$          | $0.4826$          | $0.4422$          | $0.1850$                  |</span>
+<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.4123$          | $0.4729$          | $0.4771$          | $0.5043$          | $0.5164$                  |</span>
+<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.4162$          | $0.4792$          | $0.3166$          | $0.2347$          | $0.3094$                  |</span>
+<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.5789}$ | $\mathbf{0.6875}$ | $\mathbf{0.7110}$ | $\mathbf{0.6983}$ | $\mathbf{0.6619}$         |</span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM        | $0.4778$          | $0.4899$          | $0.5037$          | $0.4969$          | $0.4915$                  |</span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.6007$          | $0.6462$          | $0.6355$          | $0.5952$          | $0.3252$                  |</span>
+<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.5471$          | $0.6340$          | $0.6532$          | $0.6634$          | $0.6648$                  |</span>
+<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$                  |</span>
+<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$         |</span>
 <span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.</span>
 <span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -2484,7 +2484,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)</span></span>
 <span id="cb3-424"><a href="#cb3-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | $h = 2$           | $h = 4$           | $h = 8$           | $h = 16$          |</span>
+<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | $\mathbf{h = 2}$  | $\mathbf{h = 4}$  | $\mathbf{h = 8}$  | $\mathbf{h = 16}$ |</span>
 <span id="cb3-426"><a href="#cb3-426" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
 <span id="cb3-427"><a href="#cb3-427" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |</span>
 <span id="cb3-428"><a href="#cb3-428" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |</span>
