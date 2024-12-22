@@ -478,6 +478,12 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 ![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
 
+
+
+Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
+:::
+
+<--
 | Metric  | Algorithm | Impossible | Moons      | Circles    | Smile      |
 |---------|-----------|------------|------------|------------|------------|
 | **ARI** | DB        | 0.8180     | 0.9294     | 0.9920     | **1.0000** |
@@ -492,9 +498,7 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 |         | WC        | 0.7505     | 0.4690     | 0.0056     | 0.6120     |
 |         | GIT       | 0.9103     | 0.9812     | **1.0000** | 0.6210     |
 |         | SB        | **0.9995** | **0.9787** | **1.0000** | **1.0000** |
-
-Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
-:::
+-->
 
 ## Noise robustness
 
