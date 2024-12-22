@@ -619,8 +619,6 @@ Taking a closer look at the second step of @alg-spectral-bridges, that is the af
 
 The calculation of the affinity matrix is highlighted by the Python code @lst-code-affinity. Though it could be even more optimized, the following code snippet is approximately 200 times faster than a naive implementation on a small dataset comprised of $n = 3594$, $d = 2$ points, and a value of $m = 250$.
 
-Notice that the Python code is significantly faster than the R code.
-
 ```{python affinity, python.reticulate = FALSE}
 #| lst-label: lst-code-affinity
 #| lst-cap: "Python code for affinity matrix computation"
