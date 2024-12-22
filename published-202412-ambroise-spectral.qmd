@@ -459,7 +459,7 @@ The Spectral Bridges algorithm was also put to the test against the same competi
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)
 
-| Metric  | Algorithm               | cancer.csv        |
+| Metric  | Algorithm               | UCI Breast Cancer |
 |---------|-------------------------|-------------------|
 | **ARI** | KM                      | $0.6675$          |
 |         | EM                      | $\mathbf{0.7718}$ |
@@ -494,7 +494,7 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 ::: {#fig-synthetic-scores layout-nrow=2}
 
-![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
+![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf){height=75%}
 
 | Metric  | Algorithm | Impossible        | Moons             | Circles           | Smile             |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
