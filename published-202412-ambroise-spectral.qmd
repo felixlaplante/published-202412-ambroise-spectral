@@ -108,6 +108,8 @@ The basic idea involves calculating the difference in inertia achieved by projec
 Balls (left) versus Bridge (right). The inertia of each structure is the sum of the squared distances represented by grey lines.
 :::
 
+\newpage
+
 Let us consider a sample $X=(\boldsymbol x_i)_{i \in \{1,\cdots,n\}}$ of vectors $\boldsymbol x_i \in \mathbb R^d$ and a set of $m$ coding vectors $(\boldsymbol \mu_k)_{k \in \{1,\cdots,m\}}$ defining a partition $P=\{\mathcal{V}_1,\cdots,\mathcal{V}_m \}$ of $\mathbb R^d$ into $m$ Voronoï regions:
 $$
 \mathcal{V}_k = \left\{ \mathbf{x} \in \mathbb{R}^d \mid \|\mathbf{x} - \boldsymbol{\mu}_k\| \leq \|\mathbf{x} - \boldsymbol{\mu}_j\| \text{ for all } j \neq k \right\}.
@@ -191,6 +193,7 @@ between the classes (See Figure @fig-interpretation).
 Spectral Bridge affinity illustration involving two centroids. The bold black dots mark the centroids of each cluster, while the colored cells represent the final partition of data points. In subfigures (a) and (c), the length of each dotted grey segment is proportional to $1/2 - \alpha_i$, whereas the thin black segments are proportional to $\alpha_i$. Subfigures (b) and (d) depict the distribution of $\alpha_i$, showing the behavior when clusters are either closely positioned (a, b) or well-separated (c, d).
 :::
 
+\newpage
 
 Note that the criterion is local and indicates the relative difference in densities between the balls and the bridge, rather than evaluating a global score for the densities of the structures.
 
@@ -287,6 +290,7 @@ In spectral clustering, the time complexity is usually dominated by the eigendec
 Illustration of the Spectral Bridges algorithm with the Iris dataset (first principal plane). The bold red dots represent the centroids of the clusters, while the colored cells indicate the final partition of the data points. Vector quantization (Step 1 of @alg-spectral-bridges), Affinity computation (Step 2 of @alg-spectral-bridges), Spectral clustering and spreading (Step 3-4 of @alg-spectral-bridges).
 :::
 
+\newpage
 
 ## Hyperparameter settings {#sec-hyp}
 
@@ -386,6 +390,7 @@ To assess the algorithm's time complexity, the average execution times over 50 r
 Average time taken per model fit.
 :::
 
+\newpage
 
 ## Accuracy
 
@@ -413,6 +418,8 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
 :::
 
+\newpage
+
 Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
 
 ::: {#fig-mnist-umap-scores layout-nrow=2}
@@ -434,6 +441,8 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
 :::
 
+\newpage
+
 Note the Spectral Bridges is substantially better than other traditional methods and shines even with quite simple dimension reduction algorithms.
 
 For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and 500 Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.
@@ -448,6 +457,8 @@ For visualization purposes, the predicted clusters by Spectral Bridges and k-mea
 
 UMAP projection of predicted clusters against the ground truth labels.
 :::
+
+\newpage
 
 The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn's UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see @fig-cancer-scores). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.
 
@@ -468,6 +479,8 @@ Since the Spectral Bridges algorithm is expected to excel at discerning complex 
 Four toy datasets.
 :::
 
+\newpage
+
 Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN's parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.
 
 ![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf){#fig-synthetic-scores}
@@ -487,8 +500,9 @@ To evaluate the noise robustness of the algorithm, two experimental setups were 
 ![Gaussian noise](figures/gaussian_noise_impossible.pdf)
 
 Three representations of the algorithm's predicted cluster centers are displayed as colored dots, with each point of the Impossible dataset shown as a small black dot. In the left graph, the dataset is unmodified. In the center graph, 250 uniformly distributed samples were added. In the right graph, Gaussian noise perturbations with $\sigma = 0.1$ were applied.
-
 :::
+
+\newpage
 
 
 # Conclusive remarks
