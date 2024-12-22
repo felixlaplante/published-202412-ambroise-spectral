@@ -400,7 +400,7 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)
 
-| Metric  | Algorithm | h = 8             | h = 16            | h = 32            | h = 64            | h = 784 (full)    |
+| Metric  | Algorithm | $h = 8$           | $h = 16$          | $h = 32$          | $h = 64$          | $h = 784$ (full)  |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|
 | **ARI** | KM        | $0.3661$          | $0.3701$          | $0.3794$          | $0.3740$          | $0.3665$          |
 |         | EM        | $0.4672$          | $0.5081$          | $0.4826$          | $0.4422$          | $0.1850$          |
@@ -422,7 +422,7 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)
 
-| Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |
+| Metric  | Algorithm | $h = 2$           | $h = 4$           | $h = 8$           | $h = 16$          |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
 | **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |
 |         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |
@@ -502,7 +502,7 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 |         | KM        | $0.5984$          | $0.2390$          | $-0.0009$         | $0.5522$          |
 |         | EM        | $0.6112$          | $0.4897$          | $-0.0009$         | $0.7526$          |
 |         | WC        | $0.6368$          | $0.4298$          | $0.0068$          | $0.5548$          |
-|         | GIT       | $0.8895$          | $\mathbf{0.9920$} | $\mathbf{1.0000}$ | $0.5693$          |
+|         | GIT       | $0.8895$          | $\mathbf{0.9920}$ | $\mathbf{1.0000}$ | $0.5693$          |
 |         | SB        | $\mathbf{0.9996}$ | $0.9912$          | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |
 | **NMI** | DB        | $0.8823$          | $0.8825$          | $0.9803$          | $\mathbf{1.0000}$ |
 |         | KM        | $0.6936$          | $0.1807$          | $0.0000$          | $0.6126$          |
