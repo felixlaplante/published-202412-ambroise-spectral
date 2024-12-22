@@ -413,7 +413,7 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 |         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |
 |         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |
 
-Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 :::
 
 Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
@@ -435,7 +435,7 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 |         | GIT       | $0.9081$          | $0.9172$          | $\mathbf{0.9183}$ | $0.9184$          |
 |         | SB        | $\mathbf{0.9182}$ | $\mathbf{0.9198}$ | $0.9125$          | $\mathbf{0.9214}$ |
 
-Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 :::
 
 Note the Spectral Bridges is substantially better than other traditional methods and shines even with quite simple dimension reduction algorithms.
@@ -472,7 +472,7 @@ The Spectral Bridges algorithm was also put to the test against the same competi
 |         | GIT                     | $0.2576$          |
 |         | SB                      | $0.5787$          |
 
-Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest scores in each row are in bold.
+Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 :::
 
 Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.
@@ -512,7 +512,7 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 |         | SB        | $\mathbf{0.9995}$ | $\mathbf{0.9787}$ | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |
 
 
-Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
+Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 :::
 
 ## Noise robustness
