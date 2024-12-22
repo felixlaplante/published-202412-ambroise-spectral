@@ -48,6 +48,8 @@ published: true # will be set to true once accepted
 format:
   computo-html: default 
   computo-pdf:  default
+  pdf:
+    fig-pos: 'h'
 editor: 
   markdown: 
     wrap: 72
