@@ -474,8 +474,27 @@ Four toy datasets.
 
 Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN's parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.
 
-![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf){#fig-synthetic-scores}
+::: {#fig-synthetic-scores}
 
+![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
+
+| Metric  | Algorithm | impossible.csv | moons.csv      | circles.csv    | smile.csv      |
+|---------|-----------|----------------|----------------|----------------|----------------|
+| **ARI** | DB        | 0.8180         | 0.9294         | 0.9920         | **1.0000**     |
+|         | KM        | 0.5984         | 0.2390         | -0.0009        | 0.5522         |
+|         | EM        | 0.6112         | 0.4897         | -0.0009        | 0.7526         |
+|         | WC        | 0.6368         | 0.4298         | 0.0068         | 0.5548         |
+|         | GIT       | 0.8895         | 0.9920         | **1.0000**     | 0.5693         |
+|         | SB        | **0.9996**     | **0.9912**     | **1.0000**     | **1.0000**     |
+| **NMI** | DB        | 0.8823         | 0.8825         | 0.9803         | **1.0000**     |
+|         | KM        | 0.6936         | 0.1807         | 0.0000         | 0.6126         |
+|         | EM        | 0.7021         | 0.3905         | 0.0001         | 0.8001         |
+|         | WC        | 0.7505         | 0.4690         | 0.0056         | 0.6120         |
+|         | GIT       | 0.9103         | 0.9812         | **1.0000**     | 0.6210         |
+|         | SB        | **0.9995**     | **0.9787**     | **1.0000**     | **1.0000**     |
+
+Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
+:::
 
 ## Noise robustness
 
