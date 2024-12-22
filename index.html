@@ -506,7 +506,7 @@ a_{p, kl} =
 <h2 data-number="3.2" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">3.2</span> Algorithm</h2>
 <p>The Spectral Bridges algorithm first identifies local clusters to define Voronoï regions, computes edges with affinity weights between these regions, and ultimately cuts edges between regions with low inter-region density to determine the final clusters (see <a href="#alg-spectral-bridges" class="quarto-xref">Algorithm 1</a> and <a href="#fig-steps" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>In spectral clustering, the time complexity is usually dominated by the eigendecomposition step, which is <span class="math inline">O(n^3)</span>. However, in the case of Spectral Bridges, the k-means algorithm has a time complexity of <span class="math inline">O(n \times m \times d)</span>. For datasets with large <span class="math inline">n</span>, this can be more significant than the <span class="math inline">O(m^3)</span> time complexity of the Spectral Bridges eigendecomposition. As for the affinity matrix construction, there are <span class="math inline">m^2</span> coefficients to be calculated. Each <span class="math inline">a_{kl}</span> coefficient requires the computation of <span class="math inline">n_k + n_l</span> dot products as well as the norm <span class="math inline">\| \boldsymbol \mu_k-\boldsymbol \mu_l \|</span>, the latter often being negligeable. Assuming that the Voronoï regions are roughly balanced in cardinality, we have <span class="math inline">n_k \approx \frac{n}{m}</span>. Since <span class="math inline">m</span> should always be less than <span class="math inline">n</span>, therefore <span class="math inline">\frac{n}{m} &gt; 1</span> and the time complexity of the affinity matrix is <span class="math inline">O(\frac{n}{m} \times m^2 \times d) = O(n \times m \times d)</span> given the acceptable range of values for <span class="math inline">m</span>. Nonetheless, this is rarely the bottleneck.</p>
-<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-line-number="true" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1">
+<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number="true" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Spectral Bridges} \begin{algorithmic} \Procedure{SpectralBridges}{$X, k, m$} \Comment{$X$: input dataset, $k$: number of clusters, $m$: number of Voronoï regions} \State \textbf{Step 1: Vector Quantization} \State $\text{centroids}, \text{voronoiRegions} \gets$ \Call{KMeans}{$X, m$} \Comment{Initial centroids and Voronoi regions using k-means++} \State \textbf{Step 2: Affinity Computation} \State $A = \{g(a_{kl})\}_{kl} \gets$ \Call{Affinity}{$X, \text{centroids}, \text{voronoiRegions}$} \Comment{Compute affinity matrix $A$} \State \textbf{Step 3: Spectral Clustering} \Comment{Assign each region to a cluster} \State $\text{labels} \gets$ \Call{SpectralClustering}{$A, k$} \State \textbf{Step 4: Propagate} \Comment{Assign each data point to the cluster of its region} \State $\text{clusters} \gets$ \Call{Propagate}{$X, \text{labels}, \text{voronoiRegions}$} \State \Return $\text{clusters}$ \Comment{Return cluster labels for data points in $X$} \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -839,7 +839,7 @@ Figure&nbsp;5: Average time taken per model fit.
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mnist-pca-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 </figcaption>
 </figure>
 </div>
@@ -965,7 +965,7 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mnist-umap-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+Figure&nbsp;7: Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 </figcaption>
 </figure>
 </div>
@@ -1087,7 +1087,7 @@ Figure&nbsp;8: UMAP projection of predicted clusters against the ground truth la
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cancer-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest scores in each row are in bold.
+Figure&nbsp;9: Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 </figcaption>
 </figure>
 </div>
@@ -1273,7 +1273,7 @@ Figure&nbsp;10: Four toy datasets.
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-synthetic-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
+Figure&nbsp;11: Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 </figcaption>
 </figure>
 </div>
@@ -2475,7 +2475,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |</span>
 <span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |</span>
 <span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.</span>
+<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.</span>
 <span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a>Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in <span class="sc">\{</span>2, 4, 8, 16<span class="sc">\}</span>$ using UMAP <span class="co">[</span><span class="ot">@McInnes2018</span><span class="co">]</span>, a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).</span>
@@ -2497,7 +2497,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9081$          | $0.9172$          | $\mathbf{0.9183}$ | $0.9184$          |</span>
 <span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9182}$ | $\mathbf{0.9198}$ | $0.9125$          | $\mathbf{0.9214}$ |</span>
 <span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.</span>
+<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.</span>
 <span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a>Note the Spectral Bridges is substantially better than other traditional methods and shines even with quite simple dimension reduction algorithms.</span>
@@ -2534,7 +2534,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a>|         | GIT                     | $0.2576$          |</span>
 <span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a>|         | SB                      | $0.5787$          |</span>
 <span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest scores in each row are in bold.</span>
+<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.</span>
 <span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.</span>
@@ -2574,7 +2574,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9995}$ | $\mathbf{0.9787}$ | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |</span>
 <span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.</span>
+<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.</span>
 <span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a><span class="fu">## Noise robustness</span></span>
