@@ -336,14 +336,14 @@ The algorithms are evaluated on both raw and Principal Component Analysis proces
 ### Datasets Summary & Class Balance
 
 
-| **Dataset**    | **#Dims** | **#Samples** | **#Classes** | **Class Proportions**                     |
-| -------------- | --------- | ------------ | ------------ | ----------------------------------------- |
+| **Dataset**    | **#Dims** | **#Samples** | **#Classes** | **Class Proportions**                                       |
+|----------------|-----------|--------------|--------------|-------------------------------------------------------------|
 | MNIST          | 784       | 60000        | 10           | 9.9%, 11.2%, 9.9%, 10.3%, 9.7%, 9%, 9.9%, 10.4%, 9.7%, 9.9% |
-| Breast Cancer  | 30        | 569          | 2            | 37.3%, 62.7%                              |
-| Impossible     | 2         | 3594         | 7            | 24.8%, 18.8%, 11.3%, 7.5%, 12.5%, 12.5%, 12.5% |
-| Moons          | 2         | 1000         | 2            | 50%, 50%                                  |
-| Circles        | 2         | 1000         | 2            | 50%, 50%                                  |
-| Smile          | 2         | 1000         | 4            | 25%, 25%, 25%, 25%                        |
+| Breast Cancer  | 30        | 569          | 2            | 37.3%, 62.7%                                                |
+| Impossible     | 2         | 3594         | 7            | 24.8%, 18.8%, 11.3%, 7.5%, 12.5%, 12.5%, 12.5%              |
+| Moons          | 2         | 1000         | 2            | 50%, 50%                                                    |
+| Circles        | 2         | 1000         | 2            | 50%, 50%                                                    |
+| Smile          | 2         | 1000         | 4            | 25%, 25%, 25%, 25%                                          |
 
 Table: Datasets Summary & Class Balance
 
@@ -478,17 +478,11 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 ![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
 
-
-
-Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
-:::
-
-<--
 | Metric  | Algorithm | Impossible | Moons      | Circles    | Smile      |
 |---------|-----------|------------|------------|------------|------------|
 | **ARI** | DB        | 0.8180     | 0.9294     | 0.9920     | **1.0000** |
-|         | KM        | 0.5984     | 0.2390     | -0.0009    | 0.5522     |
-|         | EM        | 0.6112     | 0.4897     | -0.0009    | 0.7526     |
+|         | KM        | 0.5984     | 0.2390     | 0.0009    | 0.5522     |
+|         | EM        | 0.6112     | 0.4897     | 0.0009    | 0.7526     |
 |         | WC        | 0.6368     | 0.4298     | 0.0068     | 0.5548     |
 |         | GIT       | 0.8895     | 0.9920     | **1.0000** | 0.5693     |
 |         | SB        | **0.9996** | **0.9912** | **1.0000** | **1.0000** |
@@ -498,7 +492,9 @@ Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. Th
 |         | WC        | 0.7505     | 0.4690     | 0.0056     | 0.6120     |
 |         | GIT       | 0.9103     | 0.9812     | **1.0000** | 0.6210     |
 |         | SB        | **0.9995** | **0.9787** | **1.0000** | **1.0000** |
--->
+
+Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
+:::
 
 ## Noise robustness
 
