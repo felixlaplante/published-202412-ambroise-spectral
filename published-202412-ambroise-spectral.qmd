@@ -400,18 +400,18 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)
 
-| Metric  | Algorithm | $\mathbf{h = 8}$  | $\mathbf{h = 16}$ | $\mathbf{h = 32}$ | $\mathbf{h = 64}$ | $\mathbf{h = 784}$ (full) |
-|---------|-----------|-------------------|-------------------|-------------------|-------------------|---------------------------|
-| **ARI** | KM        | $0.3661$          | $0.3701$          | $0.3794$          | $0.3740$          | $0.3665$                  |
-|         | EM        | $0.4672$          | $0.5081$          | $0.4826$          | $0.4422$          | $0.1850$                  |
-|         | WC        | $0.4123$          | $0.4729$          | $0.4771$          | $0.5043$          | $0.5164$                  |
-|         | GIT       | $0.4162$          | $0.4792$          | $0.3166$          | $0.2347$          | $0.3094$                  |
-|         | SB        | $\mathbf{0.5789}$ | $\mathbf{0.6875}$ | $\mathbf{0.7110}$ | $\mathbf{0.6983}$ | $\mathbf{0.6619}$         |
-| **NMI** | KM        | $0.4778$          | $0.4899$          | $0.5037$          | $0.4969$          | $0.4915$                  |
-|         | EM        | $0.6007$          | $0.6462$          | $0.6355$          | $0.5952$          | $0.3252$                  |
-|         | WC        | $0.5471$          | $0.6340$          | $0.6532$          | $0.6634$          | $0.6648$                  |
-|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$                  |
-|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$         |
+| Metric  | Algorithm | h = 8             | h = 16            | h = 32            | h = 64            | h = 784 (full)    |
+|---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|
+| **ARI** | KM        | $0.3661$          | $0.3701$          | $0.3794$          | $0.3740$          | $0.3665$          |
+|         | EM        | $0.4672$          | $0.5081$          | $0.4826$          | $0.4422$          | $0.1850$          |
+|         | WC        | $0.4123$          | $0.4729$          | $0.4771$          | $0.5043$          | $0.5164$          |
+|         | GIT       | $0.4162$          | $0.4792$          | $0.3166$          | $0.2347$          | $0.3094$          |
+|         | SB        | $\mathbf{0.5789}$ | $\mathbf{0.6875}$ | $\mathbf{0.7110}$ | $\mathbf{0.6983}$ | $\mathbf{0.6619}$ |
+| **NMI** | KM        | $0.4778$          | $0.4899$          | $0.5037$          | $0.4969$          | $0.4915$          |
+|         | EM        | $0.6007$          | $0.6462$          | $0.6355$          | $0.5952$          | $0.3252$          |
+|         | WC        | $0.5471$          | $0.6340$          | $0.6532$          | $0.6634$          | $0.6648$          |
+|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |
+|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |
 
 Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. the highest mean scores among tested algorithms are in bold.
 :::
@@ -422,7 +422,7 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)
 
-| Metric  | Algorithm | $\mathbf{h = 2}$  | $\mathbf{h = 4}$  | $\mathbf{h = 8}$  | $\mathbf{h = 16}$ |
+| Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
 | **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |
 |         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |
