@@ -53,7 +53,6 @@ editor:
     wrap: 72
 ---
 
-\newpage
 
 # Introduction
 
@@ -73,7 +72,6 @@ The method we propose aims to find non-convex clusters in large datasets, withou
 
 The paper begins with a section dedicated to presenting the context and related algorithms, followed by a detailed description of the proposed algorithm. Experiments and comparisons with reference algorithms are then conducted on both real and synthetic data.
 
-\newpage
 
 # Related Work
 
@@ -90,7 +88,6 @@ The issue of characterizing the affinity between two clusters to create an edge 
 
 Notice that the clustering robustness of many Spectral clustering algorithms heavily relies on the proper selection of kernel parameter, which is difficult to find without prior knowledge [@ng2001spectral].
 
-\newpage
 
 # Spectral Bridges
 
@@ -308,7 +305,6 @@ Determining the optimal value of $m$ using the eigengap is not straightforward. 
 
 Using this metric, we determine a near-optimal value for $m$ by maximizing the average $R$ across possible values of $m$. Additionally, the metric enhances robustness by running the algorithm with different random seeds and selecting the clustering result with the highest normalized eigengap.
 
-\newpage
 
 # Numerical experiments
 
@@ -497,7 +493,6 @@ To evaluate the noise robustness of the algorithm, two experimental setups were 
 Three representations of the algorithm's predicted cluster centers are displayed as colored dots, with each point of the Impossible dataset shown as a small black dot. In the left graph, the dataset is unmodified. In the center graph, 250 uniformly distributed samples were added. In the right graph, Gaussian noise perturbations with $\sigma = 0.1$ were applied.
 :::
 
-\newpage
 
 # Conclusive remarks
 
@@ -510,7 +505,6 @@ The design of Spectral Bridges ensures robustness to noise, a significant advant
 
 Furthermore, Spectral Bridges can be kernelized, allowing it to handle data in similarity space directly, which enhances its flexibility and applicability. Overall, Spectral Bridges is a powerful, robust, and scalable clustering algorithm that offers significant improvements over traditional methods, making it an excellent tool for advanced clustering tasks across numerous domains.
 
-\newpage
 
 # Appendix {.appendix}
 
