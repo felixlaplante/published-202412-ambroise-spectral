@@ -392,8 +392,9 @@ Average time taken per model fit.
 
 The algorithm's accuracy was first evaluated on the MNIST dataset. Metrics were collected to compare our method with k-means++, EM, GIT, and Ward clustering. Metrics were estimated by computing the empirical average over 10 consecutive runs for each method. Due to limited computational resources, we randomly selected a sample of 20,000 data points (one-third of the total) for each run, on which all algorithms were trained and tested. To ensure reproducibility, a fixed random seed was set at the beginning of all scripts. Note, however, that this does not imply centroids were initialized identically for centroid based methods, as these may vary according to the implementation of each tested algorithm.
 
-Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was tested both on the raw MNIST dataset without preprocessing ($h = 784$) and after reducing its dimension using PCA to $h \in \{8, 16, 32, 64\}$ (see @fig-mnist-pca-scores, @tab-mnist-pca-scores).
+Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was tested both on the raw MNIST dataset without preprocessing ($h = 784$) and after reducing its dimension using PCA to $h \in \{8, 16, 32, 64\}$ (see @fig-mnist-pca-scores).
 
+::: {#fig-mnist-pca-scores layout-nrow=2}
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on PCA embedded and full MNIST.](figures/mnist_pca_summary.pdf){#fig-mnist-pca-scores}
 
 | Metric  | Algorithm | h = 8          | h = 16         | h = 32         | h = 64         | h = 784 (full) |
@@ -408,11 +409,13 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 |         | WC        | 0.5471         | 0.6340         | 0.6532         | 0.6634         | 0.6648         |
 |         | GIT       | 0.5110         | 0.5720         | 0.4227         | 0.3314         | 0.4297         |
 |         | SB        | **0.6592**     | **0.7616**     | **0.7895**     | **0.7846**     | **0.7628**     |
-{tbl-id="tab-mnist-pca-scores"}
+
 Table: Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+:::
 
-Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores, @tab-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
+Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
 
+::: {#fig-mnist-umap-scores layout-nrow=2}
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple) on UMAP embedded MNIST.](figures/mnist_umap_summary.pdf){#fig-mnist-umap-scores}
 
 | Metric  | Algorithm | h = 2          | h = 4          | h = 8          | h = 16         |
@@ -427,8 +430,9 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 |         | WC        | 0.9047         | 0.8733         | 0.8721         | 0.8785         |
 |         | GIT       | 0.9081         | 0.9172         | 0.9183         | 0.9184         |
 |         | SB        | **0.9182**     | **0.9198**     | **0.9125**     | **0.9214**     |
-{tbl-id="tab-mnist-umap-scores"}
+
 Table: Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
+:::
 
 Note the Spectral Bridges is substantially better than other traditional methods and shines even with quite simple dimension reduction algorithms.
 
