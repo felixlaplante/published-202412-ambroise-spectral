@@ -100,7 +100,7 @@ The proposed algorithm uses k-means centroids for vector quantization defining V
 
 The basic idea involves calculating the difference in inertia achieved by projecting onto a segment connecting two centroids, rather than using the two centroids separately (see @fig-balls-bridge). If the difference is small, it suggests a low density between the classes. Conversely, if this difference is large, it indicates that the two classes may reside within the same densely populated region.
 
-::: {#fig-balls-bridge layout-ncol=2}
+::: {#fig-balls-bridge layout-ncol=2 fig-pos='h'}
 ![](figures/balls.pdf){width=50%}
 
 ![](figures/bridge.pdf){width=50%}
@@ -179,7 +179,7 @@ within the same densely populated region. Consequently, the sum of the
 $\alpha_i$ or $\alpha_i^2$ increases with the density of the region
 between the classes (See Figure @fig-interpretation). 
 
-::: {#fig-interpretation layout-ncol=2}
+::: {#fig-interpretation layout-ncol=2 fig-pos='h'}
 ![Margin with close centroids](figures/svm-interpretation-3.pdf)
 
 ![Density of the $\alpha_i$ for close centroids](figures/histo-alphai-3.pdf)
@@ -276,7 +276,7 @@ In spectral clustering, the time complexity is usually dominated by the eigendec
 \end{algorithm}
 ```
 
-::: {#fig-steps layout-ncol=3}
+::: {#fig-steps layout-ncol=3 fig-pos='h'}
 ![Vector quantization](figures/spectral-briges-1.pdf)
 
 ![Affinity computation](figures/spectral-briges-2.pdf)
@@ -376,7 +376,7 @@ For other algorithms, such as DBSCAN, labels were used to determine the best hyp
 
 To assess the algorithm's time complexity, the average execution times over 50 runs were computed for varying numbers of Voronoï regions $m$ as well as dataset sizes. With a constant number of clusters $K = 5$ and an embedding dimension of $d = 10$, the results (see @fig-time-complexity) highlight Spectral Bridges algorithm's efficacy. As discussed previously, we observe a linear relationship between $m$ and the execution time because the matrix construction is highly optimized and the time taken is almost negligeable compared to that of the initial k-means++ centroids initalization.
 
-::: {#fig-time-complexity layout-ncol=2}
+::: {#fig-time-complexity layout-ncol=2 fig-pos='h'}
 
 ![Varying $n$, fixed $m = 10$](figures/size_vs_time.pdf)
 
@@ -393,7 +393,7 @@ The algorithm's accuracy was first evaluated on the MNIST dataset. Metrics were 
 
 Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was tested both on the raw MNIST dataset without preprocessing ($h = 784$) and after reducing its dimension using PCA to $h \in \{8, 16, 32, 64\}$ (see @fig-mnist-pca-scores).
 
-::: {#fig-mnist-pca-scores layout-nrow=2}
+::: {#fig-mnist-pca-scores layout-nrow=2 fig-pos='h'}
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf){#fig-mnist-pca-scores}
 
 | Metric  | Algorithm | h = 8          | h = 16         | h = 32         | h = 64         | h = 784 (full) |
@@ -414,7 +414,7 @@ Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and 
 
 Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
 
-::: {#fig-mnist-umap-scores layout-nrow=2}
+::: {#fig-mnist-umap-scores layout-nrow=2 fig-pos='h'}
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf){#fig-mnist-umap-scores}
 
 | Metric  | Algorithm | h = 2          | h = 4          | h = 8          | h = 16         |
@@ -437,7 +437,7 @@ Note the Spectral Bridges is substantially better than other traditional methods
 
 For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and 500 Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.
 
-::: {#fig-MNIST layout-ncol=3}
+::: {#fig-MNIST layout-ncol=3 fig-pos='h'}
 
 ![k-means++](figures/KMumap.pdf)
 
@@ -450,11 +450,11 @@ UMAP projection of predicted clusters against the ground truth labels.
 
 The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn's UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see @fig-cancer-scores). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.
 
-![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf){#fig-cancer-scores}
+![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf){#fig-cancer-scores fig-pos='h'}
 
 Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.
 
-::: {#fig-toy-datasets layout-ncol=4}
+::: {#fig-toy-datasets layout-ncol=4 fig-pos='h'}
 
 ![Impossible](figures/impossible.pdf)
 
@@ -469,7 +469,7 @@ Four toy datasets.
 
 Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN's parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.
 
-![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf){#fig-synthetic-scores}
+![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf){#fig-synthetic-scores fig-pos='h'}
 
 
 ## Noise robustness
@@ -477,7 +477,7 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 To evaluate the noise robustness of the algorithm, two experimental setups were devised: one involved introducing Gaussian-distributed perturbations to the data, and the other involved concatenating uniformly distributed points within a predefined rectangular region (determined by the span of the dataset) to the existing dataset. As illustrated in @fig-noise-robustness, the tests demonstrate that in both scenarios, the algorithm exhibits a high degree of insensitivity to noise.
 
-::: {#fig-noise-robustness layout-ncol=3}
+::: {#fig-noise-robustness layout-ncol=3 fig-pos='h'}
 
 ![Clean](figures/clean_impossible.pdf)
 
