@@ -494,7 +494,7 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 ::: {#fig-synthetic-scores layout-nrow=2}
 
-![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf){height=75%}
+![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
 
 | Metric  | Algorithm | Impossible        | Moons             | Circles           | Smile             |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
