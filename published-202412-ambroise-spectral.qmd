@@ -53,6 +53,7 @@ editor:
     wrap: 72
 ---
 
+\newpage
 
 # Introduction
 
@@ -307,6 +308,7 @@ Determining the optimal value of $m$ using the eigengap is not straightforward. 
 
 Using this metric, we determine a near-optimal value for $m$ by maximizing the average $R$ across possible values of $m$. Additionally, the metric enhances robustness by running the algorithm with different random seeds and selecting the clustering result with the highest normalized eigengap.
 
+\newpage
 
 # Numerical experiments
 
