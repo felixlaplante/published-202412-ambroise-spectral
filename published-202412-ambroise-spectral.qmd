@@ -422,18 +422,18 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 
 ![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)
 
-| Metric  | Algorithm | h = 2          | h = 4          | h = 8          | h = 16         |
-|---------|-----------|----------------|----------------|----------------|----------------|
-| **ARI** | KM        | 0.8154         | 0.7971         | 0.7985         | 0.8160         |
-|         | EM        | 0.8670         | 0.8828         | 0.8494         | 0.8359         |
-|         | WC        | 0.9008         | 0.8015         | 0.8004         | 0.8105         |
-|         | GIT       | 0.9141         | 0.9298         | 0.9297         | 0.9289         |
-|         | SB        | **0.9304**     | **0.9318**     | **0.9315**     | **0.9332**     |
-| **NMI** | KM        | 0.8664         | 0.8586         | 0.8574         | 0.8641         |
-|         | EM        | 0.8908         | 0.9025         | 0.8916         | 0.8826         |
-|         | WC        | 0.9047         | 0.8733         | 0.8721         | 0.8785         |
-|         | GIT       | 0.9081         | 0.9172         | **0.9183**     | 0.9184         |
-|         | SB        | **0.9182**     | **0.9198**     | 0.9125         | **0.9214**     |
+| Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |
+|---------|-----------|-------------------|-------------------|-------------------|-------------------|
+| **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |
+|         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |
+|         | WC        | $0.9008$          | $0.8015$          | $0.8004$          | $0.8105$          |
+|         | GIT       | $0.9141$          | $0.9298$          | $0.9297$          | $0.9289$          |
+|         | SB        | $\mathbf{0.9304}$ | $\mathbf{0.9318}$ | $\mathbf{0.9315}$ | $\mathbf{0.9332}$ |
+| **NMI** | KM        | $0.8664$          | $0.8586$          | $0.8574$          | $0.8641$          |
+|         | EM        | $0.8908$          | $0.9025$          | $0.8916$          | $0.8826$          |
+|         | WC        | $0.9047$          | $0.8733$          | $0.8721$          | $0.8785$          |
+|         | GIT       | $0.9081$          | $0.9172$          | $\mathbf{0.9183}$ | $0.9184$          |
+|         | SB        | $\mathbf{0.9182}$ | $\mathbf{0.9198}$ | $0.9125$          | $\mathbf{0.9214}$ |
 
 Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest scores in each row are in bold.
 :::
@@ -455,7 +455,25 @@ UMAP projection of predicted clusters against the ground truth labels.
 
 The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn's UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see @fig-cancer-scores). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.
 
-![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf){#fig-cancer-scores}
+:::{#fig-cancer-scores layout-nrow=2}
+
+![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)
+
+| Metric  | Algorithm               | cancer.csv        |
+|---------|-------------------------|-------------------|
+| **ARI** | KM                      | $0.6675$          |
+|         | EM                      | $\mathbf{0.7718}$ |
+|         | WC                      | $0.5750$          |
+|         | GIT                     | $0.2138$          |
+|         | SB                      | $0.6985$          |
+| **NMI** | KM                      | $0.5502$          |
+|         | EM                      | $\mathbf{0.6586}$ |
+|         | WC                      | $0.4569$          |
+|         | GIT                     | $0.2576$          |
+|         | SB                      | $0.5787$          |
+
+Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest scores in each row are in bold.
+:::
 
 Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.
 
@@ -478,20 +496,21 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 ![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
 
-| Metric  | Algorithm | Impossible | Moons      | Circles    | Smile      |
-|---------|-----------|------------|------------|------------|------------|
-| **ARI** | DB        | 0.8180     | 0.9294     | 0.9920     | **1.0000** |
-|         | KM        | 0.5984     | 0.2390     | 0.0009    | 0.5522     |
-|         | EM        | 0.6112     | 0.4897     | 0.0009    | 0.7526     |
-|         | WC        | 0.6368     | 0.4298     | 0.0068     | 0.5548     |
-|         | GIT       | 0.8895     | 0.9920     | **1.0000** | 0.5693     |
-|         | SB        | **0.9996** | **0.9912** | **1.0000** | **1.0000** |
-| **NMI** | DB        | 0.8823     | 0.8825     | 0.9803     | **1.0000** |
-|         | KM        | 0.6936     | 0.1807     | 0.0000     | 0.6126     |
-|         | EM        | 0.7021     | 0.3905     | 0.0001     | 0.8001     |
-|         | WC        | 0.7505     | 0.4690     | 0.0056     | 0.6120     |
-|         | GIT       | 0.9103     | 0.9812     | **1.0000** | 0.6210     |
-|         | SB        | **0.9995** | **0.9787** | **1.0000** | **1.0000** |
+| Metric  | Algorithm | Impossible        | Moons             | Circles           | Smile             |
+|---------|-----------|-------------------|-------------------|-------------------|-------------------|
+| **ARI** | DB        | $0.8180$          | $0.9294$          | $0.9920$          | $\mathbf{1.0000}$ |
+|         | KM        | $0.5984$          | $0.2390$          | $-0.0009$         | $0.5522$          |
+|         | EM        | $0.6112$          | $0.4897$          | $-0.0009$         | $0.7526$          |
+|         | WC        | $0.6368$          | $0.4298$          | $0.0068$          | $0.5548$          |
+|         | GIT       | $0.8895$          | $0.9920$          | $\mathbf{1.0000}$ | $0.5693$          |
+|         | SB        | $\mathbf{0.9996}$ | $\mathbf{0.9912}$ | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |
+| **NMI** | DB        | $0.8823$          | $0.8825$          | $0.9803$          | $\mathbf{1.0000}$ |
+|         | KM        | $0.6936$          | $0.1807$          | $0.0000$          | $0.6126$          |
+|         | EM        | $0.7021$          | $0.3905$          | $0.0001$          | $0.8001$          |
+|         | WC        | $0.7505$          | $0.4690$          | $0.0056$          | $0.6120$          |
+|         | GIT       | $0.9103$          | $0.9812$          | $\mathbf{1.0000}$ | $0.6210$          |
+|         | SB        | $\mathbf{0.9995}$ | $\mathbf{0.9787}$ | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |
+
 
 Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest scores in each row are in bold.
 :::
