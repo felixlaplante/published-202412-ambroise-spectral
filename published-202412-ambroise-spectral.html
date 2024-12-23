@@ -506,7 +506,7 @@ a_{p, kl} =
 <h2 data-number="3.2" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">3.2</span> Algorithm</h2>
 <p>The Spectral Bridges algorithm first identifies local clusters to define Voronoï regions, computes edges with affinity weights between these regions, and ultimately cuts edges between regions with low inter-region density to determine the final clusters (see <a href="#alg-spectral-bridges" class="quarto-xref">Algorithm 1</a> and <a href="#fig-steps" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>In spectral clustering, the time complexity is usually dominated by the eigendecomposition step, which is <span class="math inline">O(n^3)</span>. However, in the case of Spectral Bridges, the k-means algorithm has a time complexity of <span class="math inline">O(n \times m \times d)</span>. For datasets with large <span class="math inline">n</span>, this can be more significant than the <span class="math inline">O(m^3)</span> time complexity of the Spectral Bridges eigendecomposition. As for the affinity matrix construction, there are <span class="math inline">m^2</span> coefficients to be calculated. Each <span class="math inline">a_{kl}</span> coefficient requires the computation of <span class="math inline">n_k + n_l</span> dot products as well as the norm <span class="math inline">\| \boldsymbol \mu_k-\boldsymbol \mu_l \|</span>, the latter often being negligeable. Assuming that the Voronoï regions are roughly balanced in cardinality, we have <span class="math inline">n_k \approx \frac{n}{m}</span>. Since <span class="math inline">m</span> should always be less than <span class="math inline">n</span>, therefore <span class="math inline">\frac{n}{m} &gt; 1</span> and the time complexity of the affinity matrix is <span class="math inline">O(\frac{n}{m} \times m^2 \times d) = O(n \times m \times d)</span> given the acceptable range of values for <span class="math inline">m</span>. Nonetheless, this is rarely the bottleneck.</p>
-<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="1" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number-punc=":" data-caption-prefix="Algorithm">
+<div id="alg-spectral-bridges" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Spectral Bridges} \begin{algorithmic} \Procedure{SpectralBridges}{$X, k, m$} \Comment{$X$: input dataset, $k$: number of clusters, $m$: number of Voronoï regions} \State \textbf{Step 1: Vector Quantization} \State $\text{centroids}, \text{voronoiRegions} \gets$ \Call{KMeans}{$X, m$} \Comment{Initial centroids and Voronoi regions using k-means++} \State \textbf{Step 2: Affinity Computation} \State $A = \{g(a_{kl})\}_{kl} \gets$ \Call{Affinity}{$X, \text{centroids}, \text{voronoiRegions}$} \Comment{Compute affinity matrix $A$} \State \textbf{Step 3: Spectral Clustering} \Comment{Assign each region to a cluster} \State $\text{labels} \gets$ \Call{SpectralClustering}{$A, k$} \State \textbf{Step 4: Propagate} \Comment{Assign each data point to the cluster of its region} \State $\text{clusters} \gets$ \Call{Propagate}{$X, \text{labels}, \text{voronoiRegions}$} \State \Return $\text{clusters}$ \Comment{Return cluster labels for data points in $X$} \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -789,15 +789,6 @@ Figure&nbsp;5: Average time taken per model fit.
 <td style="text-align: left;"><span class="math inline">\mathbf{0.6619}</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">———</td>
-<td style="text-align: left;">———–</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"><strong>NMI</strong></td>
 <td style="text-align: left;">KM</td>
 <td style="text-align: left;"><span class="math inline">0.4778</span></td>
@@ -806,7 +797,7 @@ Figure&nbsp;5: Average time taken per model fit.
 <td style="text-align: left;"><span class="math inline">0.4969</span></td>
 <td style="text-align: left;"><span class="math inline">0.4915</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">EM</td>
 <td style="text-align: left;"><span class="math inline">0.6007</span></td>
@@ -815,7 +806,7 @@ Figure&nbsp;5: Average time taken per model fit.
 <td style="text-align: left;"><span class="math inline">0.5952</span></td>
 <td style="text-align: left;"><span class="math inline">0.3252</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">WC</td>
 <td style="text-align: left;"><span class="math inline">0.5471</span></td>
@@ -824,7 +815,7 @@ Figure&nbsp;5: Average time taken per model fit.
 <td style="text-align: left;"><span class="math inline">0.6634</span></td>
 <td style="text-align: left;"><span class="math inline">0.6648</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">GIT</td>
 <td style="text-align: left;"><span class="math inline">0.5110</span></td>
@@ -833,7 +824,7 @@ Figure&nbsp;5: Average time taken per model fit.
 <td style="text-align: left;"><span class="math inline">0.3314</span></td>
 <td style="text-align: left;"><span class="math inline">0.4297</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">SB</td>
 <td style="text-align: left;"><span class="math inline">\mathbf{0.6592}</span></td>
@@ -929,14 +920,6 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <td style="text-align: left;"><span class="math inline">\mathbf{0.9332}</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">———</td>
-<td style="text-align: left;">———–</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"><strong>NMI</strong></td>
 <td style="text-align: left;">KM</td>
 <td style="text-align: left;"><span class="math inline">0.8664</span></td>
@@ -944,7 +927,7 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <td style="text-align: left;"><span class="math inline">0.8574</span></td>
 <td style="text-align: left;"><span class="math inline">0.8641</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">EM</td>
 <td style="text-align: left;"><span class="math inline">0.8908</span></td>
@@ -952,7 +935,7 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <td style="text-align: left;"><span class="math inline">0.8916</span></td>
 <td style="text-align: left;"><span class="math inline">0.8826</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">WC</td>
 <td style="text-align: left;"><span class="math inline">0.9047</span></td>
@@ -960,7 +943,7 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <td style="text-align: left;"><span class="math inline">0.8721</span></td>
 <td style="text-align: left;"><span class="math inline">0.8785</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">GIT</td>
 <td style="text-align: left;"><span class="math inline">0.9081</span></td>
@@ -968,7 +951,7 @@ Figure&nbsp;6: Comparison of clustering algorithms on PCA embedded and full MNIS
 <td style="text-align: left;"><span class="math inline">\mathbf{0.9183}</span></td>
 <td style="text-align: left;"><span class="math inline">0.9184</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">SB</td>
 <td style="text-align: left;"><span class="math inline">\mathbf{0.9182}</span></td>
@@ -1074,31 +1057,26 @@ Figure&nbsp;8: UMAP projection of predicted clusters against the ground truth la
 <td style="text-align: left;"><span class="math inline">0.6985</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">———</td>
-<td style="text-align: left;">————————-</td>
-<td style="text-align: left;">——————-</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"><strong>NMI</strong></td>
 <td style="text-align: left;">KM</td>
 <td style="text-align: left;"><span class="math inline">0.5502</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">EM</td>
 <td style="text-align: left;"><span class="math inline">\mathbf{0.6586}</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">WC</td>
 <td style="text-align: left;"><span class="math inline">0.4569</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">GIT</td>
 <td style="text-align: left;"><span class="math inline">0.2576</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">SB</td>
 <td style="text-align: left;"><span class="math inline">0.5787</span></td>
@@ -1242,14 +1220,6 @@ Figure&nbsp;10: Four toy datasets.
 <td style="text-align: left;"><span class="math inline">\mathbf{1.0000}</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">———</td>
-<td style="text-align: left;">———–</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-<td style="text-align: left;">——————-</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;"><strong>NMI</strong></td>
 <td style="text-align: left;">DB</td>
 <td style="text-align: left;"><span class="math inline">0.8823</span></td>
@@ -1257,7 +1227,7 @@ Figure&nbsp;10: Four toy datasets.
 <td style="text-align: left;"><span class="math inline">0.9803</span></td>
 <td style="text-align: left;"><span class="math inline">\mathbf{1.0000}</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">KM</td>
 <td style="text-align: left;"><span class="math inline">0.6936</span></td>
@@ -1265,7 +1235,7 @@ Figure&nbsp;10: Four toy datasets.
 <td style="text-align: left;"><span class="math inline">0.0000</span></td>
 <td style="text-align: left;"><span class="math inline">0.6126</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">EM</td>
 <td style="text-align: left;"><span class="math inline">0.7021</span></td>
@@ -1273,7 +1243,7 @@ Figure&nbsp;10: Four toy datasets.
 <td style="text-align: left;"><span class="math inline">0.0001</span></td>
 <td style="text-align: left;"><span class="math inline">0.8001</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">WC</td>
 <td style="text-align: left;"><span class="math inline">0.7505</span></td>
@@ -1281,7 +1251,7 @@ Figure&nbsp;10: Four toy datasets.
 <td style="text-align: left;"><span class="math inline">0.0056</span></td>
 <td style="text-align: left;"><span class="math inline">0.6120</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">GIT</td>
 <td style="text-align: left;"><span class="math inline">0.9103</span></td>
@@ -1289,7 +1259,7 @@ Figure&nbsp;10: Four toy datasets.
 <td style="text-align: left;"><span class="math inline">\mathbf{1.0000}</span></td>
 <td style="text-align: left;"><span class="math inline">0.6210</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">SB</td>
 <td style="text-align: left;"><span class="math inline">\mathbf{0.9995}</span></td>
@@ -2498,283 +2468,279 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.4123$          | $0.4729$          | $0.4771$          | $0.5043$          | $0.5164$          |</span>
 <span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.4162$          | $0.4792$          | $0.3166$          | $0.2347$          | $0.3094$          |</span>
 <span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.5789}$ | $\mathbf{0.6875}$ | $\mathbf{0.7110}$ | $\mathbf{0.6983}$ | $\mathbf{0.6619}$ |</span>
-<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|</span>
-<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM        | $0.4778$          | $0.4899$          | $0.5037$          | $0.4969$          | $0.4915$          |</span>
-<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.6007$          | $0.6462$          | $0.6355$          | $0.5952$          | $0.3252$          |</span>
-<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.5471$          | $0.6340$          | $0.6532$          | $0.6634$          | $0.6648$          |</span>
-<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |</span>
-<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |</span>
-<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
-<span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a>Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in <span class="sc">\{</span>2, 4, 8, 16<span class="sc">\}</span>$ using UMAP <span class="co">[</span><span class="ot">@McInnes2018</span><span class="co">]</span>, a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).</span>
-<span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-umap-scores layout-nrow=2}</span>
-<span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-424"><a href="#cb3-424" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)</span></span>
-<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-426"><a href="#cb3-426" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |</span>
-<span id="cb3-427"><a href="#cb3-427" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
-<span id="cb3-428"><a href="#cb3-428" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |</span>
-<span id="cb3-429"><a href="#cb3-429" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |</span>
-<span id="cb3-430"><a href="#cb3-430" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.9008$          | $0.8015$          | $0.8004$          | $0.8105$          |</span>
-<span id="cb3-431"><a href="#cb3-431" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9141$          | $0.9298$          | $0.9297$          | $0.9289$          |</span>
-<span id="cb3-432"><a href="#cb3-432" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9304}$ | $\mathbf{0.9318}$ | $\mathbf{0.9315}$ | $\mathbf{0.9332}$ |</span>
-<span id="cb3-433"><a href="#cb3-433" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
-<span id="cb3-434"><a href="#cb3-434" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM        | $0.8664$          | $0.8586$          | $0.8574$          | $0.8641$          |</span>
-<span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.8908$          | $0.9025$          | $0.8916$          | $0.8826$          |</span>
-<span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.9047$          | $0.8733$          | $0.8721$          | $0.8785$          |</span>
-<span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9081$          | $0.9172$          | $\mathbf{0.9183}$ | $0.9184$          |</span>
-<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9182}$ | $\mathbf{0.9198}$ | $0.9125$          | $\mathbf{0.9214}$ |</span>
-<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
-<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM        | $0.4778$          | $0.4899$          | $0.5037$          | $0.4969$          | $0.4915$          |</span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.6007$          | $0.6462$          | $0.6355$          | $0.5952$          | $0.3252$          |</span>
+<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.5471$          | $0.6340$          | $0.6532$          | $0.6634$          | $0.6648$          |</span>
+<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |</span>
+<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |</span>
+<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
+<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a>Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in <span class="sc">\{</span>2, 4, 8, 16<span class="sc">\}</span>$ using UMAP <span class="co">[</span><span class="ot">@McInnes2018</span><span class="co">]</span>, a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).</span>
+<span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a>::: {#fig-mnist-umap-scores layout-nrow=2}</span>
+<span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)</span></span>
+<span id="cb3-424"><a href="#cb3-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |</span>
+<span id="cb3-426"><a href="#cb3-426" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
+<span id="cb3-427"><a href="#cb3-427" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |</span>
+<span id="cb3-428"><a href="#cb3-428" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.8670$          | $0.8828$          | $0.8494$          | $0.8359$          |</span>
+<span id="cb3-429"><a href="#cb3-429" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.9008$          | $0.8015$          | $0.8004$          | $0.8105$          |</span>
+<span id="cb3-430"><a href="#cb3-430" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9141$          | $0.9298$          | $0.9297$          | $0.9289$          |</span>
+<span id="cb3-431"><a href="#cb3-431" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9304}$ | $\mathbf{0.9318}$ | $\mathbf{0.9315}$ | $\mathbf{0.9332}$ |</span>
+<span id="cb3-432"><a href="#cb3-432" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM        | $0.8664$          | $0.8586$          | $0.8574$          | $0.8641$          |</span>
+<span id="cb3-433"><a href="#cb3-433" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.8908$          | $0.9025$          | $0.8916$          | $0.8826$          |</span>
+<span id="cb3-434"><a href="#cb3-434" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.9047$          | $0.8733$          | $0.8721$          | $0.8785$          |</span>
+<span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9081$          | $0.9172$          | $\mathbf{0.9183}$ | $0.9184$          |</span>
+<span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9182}$ | $\mathbf{0.9198}$ | $0.9125$          | $\mathbf{0.9214}$ |</span>
+<span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
+<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a>Note the Spectral Bridges algorithm shines particularly even with quite simple dimension reduction algorithms.</span>
 <span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a>Note the Spectral Bridges algorithm shines particularly even with quite simple dimension reduction algorithms.</span>
+<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a>For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and $500$ Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.</span>
 <span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a>For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and $500$ Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.</span>
+<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a>::: {#fig-MNIST layout-ncol=3}</span>
 <span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a>::: {#fig-MNIST layout-ncol=3}</span>
+<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a><span class="al">![k-means++](figures/KMumap.pdf)</span></span>
 <span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a><span class="al">![k-means++](figures/KMumap.pdf)</span></span>
+<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a><span class="al">![Spectral Bridges](figures/SBumap.pdf)</span></span>
 <span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a><span class="al">![Spectral Bridges](figures/SBumap.pdf)</span></span>
+<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a><span class="al">![Ground Truth](figures/GTumap.pdf)</span></span>
 <span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a><span class="al">![Ground Truth](figures/GTumap.pdf)</span></span>
-<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>UMAP projection of predicted clusters against the ground truth labels.</span>
-<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>UMAP projection of predicted clusters against the ground truth labels.</span>
+<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a>The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn's UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see @fig-cancer-scores). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.</span>
 <span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a>The Spectral Bridges algorithm was also put to the test against the same competitors using scikit-learn's UCI Breast Cancer data. Once again, the normalized eigengap method was used, and the presented algorithm performed well, although the advantage was not as obvious in this case (see @fig-cancer-scores). However, in none of our tests has it ranked worse than k-means++. The results are displayed as a boxplot generated from 200 iterations of each algorithm using a different seed, in order to better grasp the variability lying in the seed dependent nature of the k-means++, Expectation Maximization and Spectral Bridges algorithms.</span>
+<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a>:::{#fig-cancer-scores layout-nrow=2}</span>
 <span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a>:::{#fig-cancer-scores layout-nrow=2}</span>
+<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)</span></span>
 <span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)</span></span>
-<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm               | UCI Breast Cancer |</span>
-<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a>|---------|-------------------------|-------------------|</span>
-<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM                      | $0.6675$          |</span>
-<span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a>|         | EM                      | $\mathbf{0.7718}$ |</span>
-<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a>|         | WC                      | $0.5750$          |</span>
-<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a>|         | GIT                     | $0.2138$          |</span>
-<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a>|         | SB                      | $0.6985$          |</span>
-<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a>|---------|-------------------------|-------------------|</span>
-<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM                      | $0.5502$          |</span>
-<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a>|         | EM                      | $\mathbf{0.6586}$ |</span>
-<span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a>|         | WC                      | $0.4569$          |</span>
-<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>|         | GIT                     | $0.2576$          |</span>
-<span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a>|         | SB                      | $0.5787$          |</span>
+<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm               | UCI Breast Cancer |</span>
+<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a>|---------|-------------------------|-------------------|</span>
+<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a>| **ARI** | KM                      | $0.6675$          |</span>
+<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a>|         | EM                      | $\mathbf{0.7718}$ |</span>
+<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a>|         | WC                      | $0.5750$          |</span>
+<span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a>|         | GIT                     | $0.2138$          |</span>
+<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a>|         | SB                      | $0.6985$          |</span>
+<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a>| **NMI** | KM                      | $0.5502$          |</span>
+<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a>|         | EM                      | $\mathbf{0.6586}$ |</span>
+<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a>|         | WC                      | $0.4569$          |</span>
+<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a>|         | GIT                     | $0.2576$          |</span>
+<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a>|         | SB                      | $0.5787$          |</span>
+<span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
+<span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
-<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a>Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.</span>
-<span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a>::: {#fig-toy-datasets layout-ncol=4}</span>
-<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a><span class="al">![Impossible](figures/impossible.pdf)</span></span>
-<span id="cb3-486"><a href="#cb3-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a><span class="al">![Moons](figures/moons.pdf)</span></span>
-<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a><span class="al">![Circles](figures/circles.pdf)</span></span>
-<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a><span class="al">![Smile](figures/smile.pdf)</span></span>
+<span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.</span>
+<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a>::: {#fig-toy-datasets layout-ncol=4}</span>
+<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a><span class="al">![Impossible](figures/impossible.pdf)</span></span>
+<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a><span class="al">![Moons](figures/moons.pdf)</span></span>
+<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-486"><a href="#cb3-486" aria-hidden="true" tabindex="-1"></a><span class="al">![Circles](figures/circles.pdf)</span></span>
+<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a><span class="al">![Smile](figures/smile.pdf)</span></span>
+<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a>Four toy datasets.</span>
+<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-492"><a href="#cb3-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a>Four toy datasets.</span>
-<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a>Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN's parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.</span>
-<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a>::: {#fig-synthetic-scores layout-nrow=2}</span>
-<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)</span></span>
-<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | Impossible        | Moons             | Circles           | Smile             |</span>
-<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
-<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a>| **ARI** | DB        | $0.8180$          | $0.9294$          | $0.9920$          | $\mathbf{1.0000}$ |</span>
-<span id="cb3-505"><a href="#cb3-505" aria-hidden="true" tabindex="-1"></a>|         | KM        | $0.5984$          | $0.2390$          | $-0.0009$         | $0.5522$          |</span>
-<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.6112$          | $0.4897$          | $-0.0009$         | $0.7526$          |</span>
-<span id="cb3-507"><a href="#cb3-507" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.6368$          | $0.4298$          | $0.0068$          | $0.5548$          |</span>
-<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.8895$          | $\mathbf{0.9920}$ | $\mathbf{1.0000}$ | $0.5693$          |</span>
-<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9996}$ | $0.9912$          | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |</span>
-<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
-<span id="cb3-511"><a href="#cb3-511" aria-hidden="true" tabindex="-1"></a>| **NMI** | DB        | $0.8823$          | $0.8825$          | $0.9803$          | $\mathbf{1.0000}$ |</span>
-<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a>|         | KM        | $0.6936$          | $0.1807$          | $0.0000$          | $0.6126$          |</span>
-<span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.7021$          | $0.3905$          | $0.0001$          | $0.8001$          |</span>
-<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.7505$          | $0.4690$          | $0.0056$          | $0.6120$          |</span>
-<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9103$          | $\mathbf{0.9812}$ | $\mathbf{1.0000}$ | $0.6210$          |</span>
-<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9995}$ | $0.9787$          | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |</span>
+<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a>Multiple algorithms, including the proposed one, were benchmarked in the exact same manner as for the UCI Breast Cancer data. The results show that the proposed method outperforms all tested algorithms (DBSCAN, k-means++, Expectation Maximization, GIT, and Ward Clustering) while requiring few hyperparameters. As previously discussed, DBSCAN's parameters were optimized using the ground truth labels to represent a best-case scenario; however, in practical applications, suboptimal performance is more likely. Despite this optimization, the Spectral-Bridge algorithm still demonstrates superior ability to capture and represent the underlying cluster structures.</span>
+<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a>::: {#fig-synthetic-scores layout-nrow=2}</span>
+<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a><span class="al">![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)</span></span>
+<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a>| Metric  | Algorithm | Impossible        | Moons             | Circles           | Smile             |</span>
+<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a>|---------|-----------|-------------------|-------------------|-------------------|-------------------|</span>
+<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a>| **ARI** | DB        | $0.8180$          | $0.9294$          | $0.9920$          | $\mathbf{1.0000}$ |</span>
+<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a>|         | KM        | $0.5984$          | $0.2390$          | $-0.0009$         | $0.5522$          |</span>
+<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.6112$          | $0.4897$          | $-0.0009$         | $0.7526$          |</span>
+<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.6368$          | $0.4298$          | $0.0068$          | $0.5548$          |</span>
+<span id="cb3-505"><a href="#cb3-505" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.8895$          | $\mathbf{0.9920}$ | $\mathbf{1.0000}$ | $0.5693$          |</span>
+<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9996}$ | $0.9912$          | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |</span>
+<span id="cb3-507"><a href="#cb3-507" aria-hidden="true" tabindex="-1"></a>| **NMI** | DB        | $0.8823$          | $0.8825$          | $0.9803$          | $\mathbf{1.0000}$ |</span>
+<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a>|         | KM        | $0.6936$          | $0.1807$          | $0.0000$          | $0.6126$          |</span>
+<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a>|         | EM        | $0.7021$          | $0.3905$          | $0.0001$          | $0.8001$          |</span>
+<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a>|         | WC        | $0.7505$          | $0.4690$          | $0.0056$          | $0.6120$          |</span>
+<span id="cb3-511"><a href="#cb3-511" aria-hidden="true" tabindex="-1"></a>|         | GIT       | $0.9103$          | $\mathbf{0.9812}$ | $\mathbf{1.0000}$ | $0.6210$          |</span>
+<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a>|         | SB        | $\mathbf{0.9995}$ | $0.9787$          | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |</span>
+<span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
+<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a>Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.</span>
-<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a><span class="fu">## Noise robustness</span></span>
-<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a><span class="fu">## Noise robustness</span></span>
+<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a>To evaluate the noise robustness of the algorithm, two experimental setups were devised: one involved introducing Gaussian-distributed perturbations to the data, and the other involved concatenating uniformly distributed points within a predefined rectangular region (determined by the span of the dataset) to the existing dataset. As illustrated in @fig-noise-robustness, the tests demonstrate that in both scenarios, the algorithm exhibits a high degree of insensitivity to noise.</span>
+<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a>::: {#fig-noise-robustness layout-ncol=3}</span>
 <span id="cb3-524"><a href="#cb3-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a>To evaluate the noise robustness of the algorithm, two experimental setups were devised: one involved introducing Gaussian-distributed perturbations to the data, and the other involved concatenating uniformly distributed points within a predefined rectangular region (determined by the span of the dataset) to the existing dataset. As illustrated in @fig-noise-robustness, the tests demonstrate that in both scenarios, the algorithm exhibits a high degree of insensitivity to noise.</span>
+<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a><span class="al">![Clean](figures/clean_impossible.pdf)</span></span>
 <span id="cb3-526"><a href="#cb3-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-527"><a href="#cb3-527" aria-hidden="true" tabindex="-1"></a>::: {#fig-noise-robustness layout-ncol=3}</span>
+<span id="cb3-527"><a href="#cb3-527" aria-hidden="true" tabindex="-1"></a><span class="al">![Uniform noise](figures/uniform_noise_impossible.pdf)</span></span>
 <span id="cb3-528"><a href="#cb3-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a><span class="al">![Clean](figures/clean_impossible.pdf)</span></span>
+<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a><span class="al">![Gaussian noise](figures/gaussian_noise_impossible.pdf)</span></span>
 <span id="cb3-530"><a href="#cb3-530" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a><span class="al">![Uniform noise](figures/uniform_noise_impossible.pdf)</span></span>
-<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a><span class="al">![Gaussian noise](figures/gaussian_noise_impossible.pdf)</span></span>
+<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a>Three representations of the algorithm's predicted cluster centers are displayed as colored dots, with each point of the Impossible dataset shown as a small black dot. In the left graph, the dataset is unmodified. In the center graph, 250 uniformly distributed samples were added. In the right graph, Gaussian noise perturbations with $\sigma = 0.1$ were applied.</span>
+<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a>Three representations of the algorithm's predicted cluster centers are displayed as colored dots, with each point of the Impossible dataset shown as a small black dot. In the left graph, the dataset is unmodified. In the center graph, 250 uniformly distributed samples were added. In the right graph, Gaussian noise perturbations with $\sigma = 0.1$ were applied.</span>
-<span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusive remarks</span></span>
+<span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusive remarks</span></span>
-<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a>Spectral Bridges is an original clustering algorithm which presents a novel approach by integrating the strengths of traditional k-means and spectral clustering frameworks. This algorithm utilizes a simple affinity measure for spectral clustering, which is derived from the minimal margin between pairs of Voronoï regions. </span>
+<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a>The algorithm demonstrates scalability, handling large datasets efficiently through a balanced computational complexity between the k-means clustering and eigendecomposition steps. As a non-parametric method, Spectral Bridges does not rely on strong assumptions about data distribution, enhancing its versatility across various data types. It performs exceptionally well with both synthetic and real-world data and consistently outperforms conventional clustering algorithms such as k-means, DBSCAN, and mixture models. </span>
 <span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a>Spectral Bridges is an original clustering algorithm which presents a novel approach by integrating the strengths of traditional k-means and spectral clustering frameworks. This algorithm utilizes a simple affinity measure for spectral clustering, which is derived from the minimal margin between pairs of Voronoï regions. </span>
+<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a>The design of Spectral Bridges ensures robustness to noise, a significant advantage in real-world applications. Additionally, the algorithm requires minimal hyperparameters, primarily the number of Voronoï regions, making it straightforward to tune and deploy. </span>
 <span id="cb3-543"><a href="#cb3-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a>The algorithm demonstrates scalability, handling large datasets efficiently through a balanced computational complexity between the k-means clustering and eigendecomposition steps. As a non-parametric method, Spectral Bridges does not rely on strong assumptions about data distribution, enhancing its versatility across various data types. It performs exceptionally well with both synthetic and real-world data and consistently outperforms conventional clustering algorithms such as k-means, DBSCAN, and mixture models. </span>
+<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a>Furthermore, Spectral Bridges can be kernelized, allowing it to handle data in similarity space directly, which enhances its flexibility and applicability. Overall, Spectral Bridges is a powerful, robust, and scalable clustering algorithm that offers significant improvements over traditional methods, making it an excellent tool for advanced clustering tasks across numerous domains.</span>
 <span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a>The design of Spectral Bridges ensures robustness to noise, a significant advantage in real-world applications. Additionally, the algorithm requires minimal hyperparameters, primarily the number of Voronoï regions, making it straightforward to tune and deploy. </span>
-<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a>Furthermore, Spectral Bridges can be kernelized, allowing it to handle data in similarity space directly, which enhances its flexibility and applicability. Overall, Spectral Bridges is a powerful, robust, and scalable clustering algorithm that offers significant improvements over traditional methods, making it an excellent tool for advanced clustering tasks across numerous domains.</span>
+<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix {.appendix}</span></span>
+<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix {.appendix}</span></span>
+<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a><span class="fu">## Derivation of the bridge affinity {#gain}</span></span>
+<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Derivation of the bridge affinity {#gain}</span></span>
-<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a>We denote a bridge as a segment connecting two centroids $\boldsymbol \mu_k$ and $\boldsymbol \mu_l$. The inertia of a bridge between $\mathcal{V}_k$ and $\mathcal{V}_l$ is defined as </span>
-<span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a>B_{kl} = \sum_{\boldsymbol x_i\in \mathcal{V}_k \cup \mathcal{V}_l} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2,</span>
-<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a>$$ where </span>
-<span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a>\boldsymbol p_{kl}(\boldsymbol x_i) = \boldsymbol \mu_{k} + t_i(\boldsymbol \mu_{l} - \boldsymbol \mu_{k}),</span>
-<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a>$$ with $$</span>
-<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a>t_i = \min\left(1, \max\left(0, \frac{\langle \boldsymbol x_i - \boldsymbol \mu_k | \boldsymbol \mu_l - \boldsymbol \mu_k\rangle}{\|  \boldsymbol \mu_l - \boldsymbol \mu_k \|^2}\right)\right). </span>
-<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a>$$ </span>
-<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a>$B_{kl}$, the bridge inertia between centroids $k$ and $l$, can be expressed as the sum of three terms, which represents the projection onto each centroïds and onto the segment:</span>
-<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a>We denote a bridge as a segment connecting two centroids $\boldsymbol \mu_k$ and $\boldsymbol \mu_l$. The inertia of a bridge between $\mathcal{V}_k$ and $\mathcal{V}_l$ is defined as </span>
+<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a>B_{kl} = \sum_{\boldsymbol x_i\in \mathcal{V}_k \cup \mathcal{V}_l} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2,</span>
+<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a>$$ where </span>
+<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a>\boldsymbol p_{kl}(\boldsymbol x_i) = \boldsymbol \mu_{k} + t_i(\boldsymbol \mu_{l} - \boldsymbol \mu_{k}),</span>
+<span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a>$$ with $$</span>
+<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a>t_i = \min\left(1, \max\left(0, \frac{\langle \boldsymbol x_i - \boldsymbol \mu_k | \boldsymbol \mu_l - \boldsymbol \mu_k\rangle}{\|  \boldsymbol \mu_l - \boldsymbol \mu_k \|^2}\right)\right). </span>
+<span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a>$$ </span>
+<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a>$B_{kl}$, the bridge inertia between centroids $k$ and $l$, can be expressed as the sum of three terms, which represents the projection onto each centroïds and onto the segment:</span>
+<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a>B_{kl} &amp;=&amp; \sum_{i \mid t_i = 0} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2  + \sum_{i \mid t_i = 1} \|\boldsymbol x_i - \boldsymbol \mu_l\|^2 + \sum_{i \mid t_i\in ]0,1[} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2.</span>
+<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb3-569"><a href="#cb3-569" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a>B_{kl} &amp;=&amp; \sum_{i \mid t_i = 0} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2  + \sum_{i \mid t_i = 1} \|\boldsymbol x_i - \boldsymbol \mu_l\|^2 + \sum_{i \mid t_i\in ]0,1[} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2.</span>
-<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a>The last term may be decomposed in two parts corresponding to the points of the two Voronoï regions which are projected on the segment:</span>
+<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a>The last term may be decomposed in two parts corresponding to the points of the two Voronoï regions which are projected on the segment:</span>
-<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a>\sum_{i \mid t_i\in ]0,1<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 &amp;=&amp; \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 + \sum_{i \mid t_i\in [\frac{1}{2},1[} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2<span class="sc">\\</span></span>
+<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a>\sum_{i \mid t_i\in ]0,1<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 &amp;=&amp; \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 + \sum_{i \mid t_i\in [\frac{1}{2},1[} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2<span class="sc">\\</span></span>
-<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a>and each part further decomposed using Pythagore </span>
-<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a>\sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 &amp;=&amp; \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|\boldsymbol \mu_k - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2<span class="sc">\\</span></span>
-<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a>&amp;=&amp; \sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|t_i (\boldsymbol \mu_k - \boldsymbol \mu_{l})\|^2,</span>
-<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a>\sum_{i \mid t_i\in ]\frac{1}{2},1<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 &amp;=&amp; \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_l\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|\boldsymbol \mu_l - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2<span class="sc">\\</span></span>
-<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a>&amp;=&amp; \sum_{i \mid t_i\in ]\frac{1}{2},1<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|(1-t_i) (\boldsymbol \mu_k - \boldsymbol \mu_{l})\|^2</span>
-<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a>Thus </span>
-<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a>B_{kl}- I_{kl} &amp;= \sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} t_i^2 \|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2 + \sum_{i \mid t_i\in </span><span class="co">]</span>\frac{1}{2},1[} (1-t_i)^2 \|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2,<span class="sc">\\</span></span>
-<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a>\frac{B_{kl}- I_{kl}}{\|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2} &amp;= \sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} t_i^2  + \sum_{i \mid t_i\in </span><span class="co">]</span>\frac{1}{2},1[} (1-t_i)^2, <span class="sc">\\</span></span>
-<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a>\frac{B_{kl}- I_{kl}}{(n_k+n_l)\|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2} &amp;= \frac{\sum_{\boldsymbol{x_i} \in \mathcal V_k} \langle \boldsymbol{x_i} - \boldsymbol{\mu}_k \vert \boldsymbol{\mu}_l - \boldsymbol{\mu}_k \rangle_+^2 + \sum_{\boldsymbol{x_i} \in \mathcal V_l} \langle \boldsymbol{x_i} - \boldsymbol{\mu}_l \vert \boldsymbol{\mu}_k - \boldsymbol{\mu}_l\rangle_+^2}{(n_k+n_l)\|\boldsymbol \mu_k - \boldsymbol \mu_l\|^4}.</span>
-<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a>and each part further decomposed using Pythagore </span>
+<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a>\sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 &amp;=&amp; \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|\boldsymbol \mu_k - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2<span class="sc">\\</span></span>
+<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a>&amp;=&amp; \sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|t_i (\boldsymbol \mu_k - \boldsymbol \mu_{l})\|^2,</span>
+<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a>\sum_{i \mid t_i\in ]\frac{1}{2},1<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2 &amp;=&amp; \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_l\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|\boldsymbol \mu_l - \boldsymbol p_{kl}(\boldsymbol x_i)\|^2<span class="sc">\\</span></span>
+<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a>&amp;=&amp; \sum_{i \mid t_i\in ]\frac{1}{2},1<span class="co">[</span><span class="ot">} \|\boldsymbol x_i - \boldsymbol \mu_k\|^2 - \sum_{i \mid t_i\in </span><span class="co">]</span>0,\frac{1}{2}[} \|(1-t_i) (\boldsymbol \mu_k - \boldsymbol \mu_{l})\|^2</span>
+<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a>Thus </span>
+<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a>B_{kl}- I_{kl} &amp;= \sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} t_i^2 \|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2 + \sum_{i \mid t_i\in </span><span class="co">]</span>\frac{1}{2},1[} (1-t_i)^2 \|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2,<span class="sc">\\</span></span>
+<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a>\frac{B_{kl}- I_{kl}}{\|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2} &amp;= \sum_{i \mid t_i\in ]0,\frac{1}{2}<span class="co">[</span><span class="ot">} t_i^2  + \sum_{i \mid t_i\in </span><span class="co">]</span>\frac{1}{2},1[} (1-t_i)^2, <span class="sc">\\</span></span>
+<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a>\frac{B_{kl}- I_{kl}}{(n_k+n_l)\|\boldsymbol \mu_k - \boldsymbol \mu_l\|^2} &amp;= \frac{\sum_{\boldsymbol{x_i} \in \mathcal V_k} \langle \boldsymbol{x_i} - \boldsymbol{\mu}_k \vert \boldsymbol{\mu}_l - \boldsymbol{\mu}_k \rangle_+^2 + \sum_{\boldsymbol{x_i} \in \mathcal V_l} \langle \boldsymbol{x_i} - \boldsymbol{\mu}_l \vert \boldsymbol{\mu}_k - \boldsymbol{\mu}_l\rangle_+^2}{(n_k+n_l)\|\boldsymbol \mu_k - \boldsymbol \mu_l\|^4}.</span>
+<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a><span class="fu">### Implementation </span></span>
+<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a><span class="fu">### Implementation </span></span>
-<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a>Numerical experiments have been conducted in Python. The python scripts to reproduce the simulations and figures are available at <span class="ot">&lt;https://github.com/flheight/Spectral-Bridges&gt;</span>.  The Spectral Bridge algorithm is implemented both in </span>
+<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a>Numerical experiments have been conducted in Python. The python scripts to reproduce the simulations and figures are available at <span class="ot">&lt;https://github.com/flheight/Spectral-Bridges&gt;</span>.  The Spectral Bridge algorithm is implemented both in </span>
+<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Python: <span class="ot">&lt;https://pypi.org/project/spectral-bridges&gt;</span>, and</span>
+<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>R: <span class="ot">&lt;https://github.com/cambroise/spectral-bridges-Rpackage&gt;</span>.</span>
+<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Python: <span class="ot">&lt;https://pypi.org/project/spectral-bridges&gt;</span>, and</span>
-<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>R: <span class="ot">&lt;https://github.com/cambroise/spectral-bridges-Rpackage&gt;</span>.</span>
+<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="fu">### Affinity matrix computation</span></span>
+<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a><span class="fu">### Affinity matrix computation</span></span>
-<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a>Taking a closer look at the second step of @alg-spectral-bridges, that is the affinity matrix calculation with a $O(n \times m \times d)$ time complexity, most operations can be parallelized leaving a single loop, bundling together $m^2$ dot products into only $m$ matrix multiplications, thus allowing for an efficient construction in both high and low level programming languages. Though the complexity of the algorithm remains unchanged, libraries such as Basic Linear Algebra Subprograms can render the calculations orders of magnitude faster. Moreover, the symmetrical nature of the bridge affinity can be used to effectively halve the computation time.</span>
+<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a>The calculation of the affinity matrix is highlighted by the Python code @lst-code-affinity. Though it could be even more optimized, the following code snippet is approximately 200 times faster than a naive implementation on a small dataset comprised of $n = 3594$, $d = 2$ points, and a value of $m = 250$.</span>
 <span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a>Taking a closer look at the second step of @alg-spectral-bridges, that is the affinity matrix calculation with a $O(n \times m \times d)$ time complexity, most operations can be parallelized leaving a single loop, bundling together $m^2$ dot products into only $m$ matrix multiplications, thus allowing for an efficient construction in both high and low level programming languages. Though the complexity of the algorithm remains unchanged, libraries such as Basic Linear Algebra Subprograms can render the calculations orders of magnitude faster. Moreover, the symmetrical nature of the bridge affinity can be used to effectively halve the computation time.</span>
-<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a>The calculation of the affinity matrix is highlighted by the Python code @lst-code-affinity. Though it could be even more optimized, the following code snippet is approximately 200 times faster than a naive implementation on a small dataset comprised of $n = 3594$, $d = 2$ points, and a value of $m = 250$.</span>
-<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="in">```{python affinity, python.reticulate = FALSE}</span></span>
-<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a><span class="in">#| lst-label: lst-code-affinity</span></span>
-<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="in">#| lst-cap: "Python code for affinity matrix computation"</span></span>
-<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="in"># Initialize the matrix as empty</span></span>
-<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a><span class="in">affinity = np.empty((self.n_nodes, self.n_nodes))</span></span>
-<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a><span class="in"># Center each region</span></span>
-<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a><span class="in">X_centered = [</span></span>
-<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a><span class="in">    np.array(</span></span>
-<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a><span class="in">        X[kmeans.labels_ == i] - kmeans.cluster_centers_[i],</span></span>
-<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a><span class="in">        dtype=np.float32,</span></span>
-<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a><span class="in">        order="F",</span></span>
-<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a><span class="in">    for i in range(self.n_nodes)</span></span>
-<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="in">]</span></span>
+<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a><span class="in">```{python affinity, python.reticulate = FALSE}</span></span>
+<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a><span class="in">#| lst-label: lst-code-affinity</span></span>
+<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a><span class="in">#| lst-cap: "Python code for affinity matrix computation"</span></span>
+<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="in"># Initialize the matrix as empty</span></span>
+<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a><span class="in">affinity = np.empty((self.n_nodes, self.n_nodes))</span></span>
+<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a><span class="in"># Center each region</span></span>
+<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="in">X_centered = [</span></span>
+<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a><span class="in">    np.array(</span></span>
+<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a><span class="in">        X[kmeans.labels_ == i] - kmeans.cluster_centers_[i],</span></span>
+<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a><span class="in">        dtype=np.float32,</span></span>
+<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a><span class="in">        order="F",</span></span>
+<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a><span class="in">    for i in range(self.n_nodes)</span></span>
+<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a><span class="in">]</span></span>
+<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a><span class="in"># Cardinal calculation</span></span>
+<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a><span class="in">counts = np.array([X_centered[i].shape[0] for i in range(self.n_nodes)])</span></span>
+<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="in">counts = counts[None, :] + counts[:, None]</span></span>
 <span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a><span class="in"># Cardinal calculation</span></span>
-<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="in">counts = np.array([X_centered[i].shape[0] for i in range(self.n_nodes)])</span></span>
-<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a><span class="in">counts = counts[None, :] + counts[:, None]</span></span>
-<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a><span class="in"># Calculate the affinity</span></span>
-<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a><span class="in">for i in range(self.n_nodes):</span></span>
-<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a><span class="in">    segments = np.asfortranarray(</span></span>
-<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="in">        kmeans.cluster_centers_ - kmeans.cluster_centers_[i]</span></span>
-<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="in">    dists = np.einsum("ij,ij-&gt;i", segments, segments)</span></span>
-<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a><span class="in">    dists[i] = 1</span></span>
+<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a><span class="in"># Calculate the affinity</span></span>
+<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="in">for i in range(self.n_nodes):</span></span>
+<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a><span class="in">    segments = np.asfortranarray(</span></span>
+<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a><span class="in">        kmeans.cluster_centers_ - kmeans.cluster_centers_[i]</span></span>
+<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a><span class="in">    dists = np.einsum("ij,ij-&gt;i", segments, segments)</span></span>
+<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a><span class="in">    dists[i] = 1</span></span>
+<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a><span class="in">    projs = sgemm(1.0, X_centered[i], segments, trans_b=True)</span></span>
+<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="in">    np.clip(projs / dists, 0, None, out=projs)</span></span>
+<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a><span class="in">    projs = np.power(projs, self.p)</span></span>
 <span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a><span class="in">    projs = sgemm(1.0, X_centered[i], segments, trans_b=True)</span></span>
-<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a><span class="in">    np.clip(projs / dists, 0, None, out=projs)</span></span>
-<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a><span class="in">    projs = np.power(projs, self.p)</span></span>
-<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a><span class="in">    affinity[i] = projs.sum(axis=0)</span></span>
-<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a><span class="in">affinity = np.power((affinity + affinity.T) / counts, 1 / self.p)</span></span>
-<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a><span class="in">affinity -= 0.5 * affinity.max()</span></span>
-<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a><span class="in"># Scale and exponentiate</span></span>
-<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a><span class="in">q10, q90 = np.quantile(affinity, [0.1, 0.9])</span></span>
-<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a><span class="in">gamma = np.log(self.M) / (q90 - q10)</span></span>
-<span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a><span class="in">affinity = np.exp(gamma * affinity)</span></span>
-<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a>\newpage  </span>
-<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a><span class="fu"># References {.unnumbered}</span></span>
+<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a><span class="in">    affinity[i] = projs.sum(axis=0)</span></span>
+<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a><span class="in">affinity = np.power((affinity + affinity.T) / counts, 1 / self.p)</span></span>
+<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a><span class="in">affinity -= 0.5 * affinity.max()</span></span>
+<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a><span class="in"># Scale and exponentiate</span></span>
+<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a><span class="in">q10, q90 = np.quantile(affinity, [0.1, 0.9])</span></span>
+<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a><span class="in">gamma = np.log(self.M) / (q90 - q10)</span></span>
+<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a><span class="in">affinity = np.exp(gamma * affinity)</span></span>
+<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a>\newpage  </span>
+<span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a><span class="fu"># References {.unnumbered}</span></span>
+<span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session information {.appendix .unnumbered}</span></span>
-<span id="cb3-683"><a href="#cb3-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
-<span id="cb3-685"><a href="#cb3-685" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
-<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session information {.appendix .unnumbered}</span></span>
+<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
+<span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
+<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
     <script type="text/javascript">
