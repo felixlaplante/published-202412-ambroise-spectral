@@ -336,14 +336,14 @@ The algorithms are evaluated on both raw and Principal Component Analysis proces
 ### Datasets Summary & Class Balance
 
 
-| **Dataset**    | **#Dims** | **#Samples** | **#Classes** | **Class Proportions**                                       |
-|----------------|-----------|--------------|--------------|-------------------------------------------------------------|
-| MNIST          | 784       | 60000        | 10           | 9.9%, 11.2%, 9.9%, 10.3%, 9.7%, 9%, 9.9%, 10.4%, 9.7%, 9.9% |
-| Breast Cancer  | 30        | 569          | 2            | 37.3%, 62.7%                                                |
-| Impossible     | 2         | 3594         | 7            | 24.8%, 18.8%, 11.3%, 7.5%, 12.5%, 12.5%, 12.5%              |
-| Moons          | 2         | 1000         | 2            | 50%, 50%                                                    |
-| Circles        | 2         | 1000         | 2            | 50%, 50%                                                    |
-| Smile          | 2         | 1000         | 4            | 25%, 25%, 25%, 25%                                          |
+| Dataset           | #Dims |#Samples | #Classes | Class Proportions                                                                         |
+|-------------------|-------|---------|----------|-------------------------------------------------------------------------------------------|
+| MNIST             | $784$ | $60000$ | $10$     | $9.9\%$, $11.2\%$, $9.9\%$, $10.3\%$, $9.7\%$, $9\%$, $9.9\%$, $10.4\%$, $9.7\%$, $9.9\%$ |
+| UCI Breast Cancer | $30$  | $569$   | $2$      | $37.3\%$, $62.7\%$                                                                        |
+| Impossible        | $2$   | $3594$  | $7$      | $24.8\%$, $18.8\%$, $11.3\%$, $7.5\%$, $12.5\%$, $12.5\%$, $12.5\%$                       |
+| Moons             | $2$   | $1000$  | $2$      | $50\%$, $50\%$                                                                            |
+| Circles           | $2$   | $1000$  | $2$      | $50\%$, $50\%$                                                                            |
+| Smile             | $2$   | $1000$  | $4$      | $25\%$, $25\%$, $25\%$, $25\%$                                                            |
 
 Table: Datasets Summary & Class Balance
 
@@ -353,7 +353,7 @@ Class proportions are presented in ascending order starting from label $0$.
 ## Metrics
 
 
-To evaluate the performance of the clustering algorithm, the Adjusted Rand Index (ARI) [@halkidi2002cluster] and Normalized Mutual Information (NMI) [@cover1991information] are used. ARI measures the similarity between two clustering results, ranging from -0.5 to 1, with 1 indicating perfect agreement. NMI ranges from 0 to 1, with higher values indicating better clustering quality. In some tests, the variability of scores across multiple runs is also reported due to the random initialization in k-means, though k-means++ generally provides stable and reproducible results.
+To evaluate the performance of the clustering algorithm, the Adjusted Rand Index (ARI) [@halkidi2002cluster] and Normalized Mutual Information (NMI) [@cover1991information] are used. ARI measures the similarity between two clustering results, ranging from $-0.5$ to $1$, with $1$ indicating perfect agreement. NMI ranges from $0$ to $1$, with higher values indicating better clustering quality. In some tests, the variability of scores across multiple runs is also reported due to the random initialization in k-means, though k-means++ generally provides stable and reproducible results.
 
 
 ## Platform
@@ -367,7 +367,7 @@ All experiments were conducted on an Archlinux machine with Linux 6.9.3 Kernel, 
 
 The hyperparameters of the Spectral Bridges algorithm were based on the size of each dataset, $n$, and the number of clusters, $K$.
 
-To better grasp the sensitivity with respect to $m$, the number of Voronoï cells, Spectral Bridges was run on the PCA $h = 32$ embedded MNIST dataset with varying values of $m \in \{10, 120, 230, 340, 450, 560, 670, 780, 890, 1000 \}$. The case $m = 10$ is equivalent to the k-means++ algorithm. ARI and NMI scores are recorded over 20 consecutive iterations and subsequently plotted. As shown by @fig-m-vs-score, the accuracy seems to be consistently increasing with values of $m$, with the largest observed gap occurring between values of $m = 10$ and $m = 120$, and flattening thereafter, indicating a tremendous improvement over the classical k-means++ framework even for empirically suboptimal hyperparameter values. 
+To better grasp the sensitivity with respect to $m$, the number of Voronoï cells, Spectral Bridges was run on the PCA $h = 32$ embedded MNIST dataset with varying values of $m \in \{10, 120, 230, 340, 450, 560, 670, 780, 890, 1000\}$. The case $m = 10$ is equivalent to the k-means++ algorithm. ARI and NMI scores are recorded over 20 consecutive iterations and subsequently plotted. As shown by @fig-m-vs-score, the accuracy seems to be consistently increasing with values of $m$, with the largest observed gap occurring between values of $m = 10$ and $m = 120$, and flattening thereafter, indicating a tremendous improvement over the classical k-means++ framework even for empirically suboptimal hyperparameter values. 
 
 ![ARI and NMI scores of Spectral Bridges with varying values of $m$.](figures/nodes_vs_score.pdf){#fig-m-vs-score}
 
@@ -438,9 +438,9 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
 :::
 
-Note the Spectral Bridges is substantially better than other traditional methods and shines even with quite simple dimension reduction algorithms.
+Note the Spectral Bridges algorithm shines particularly even with quite simple dimension reduction algorithms.
 
-For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and 500 Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.
+For visualization purposes, the predicted clusters by Spectral Bridges and k-means++ were projected using UMAP to compare them against the ground truth labels and to better understand the cluster shapes (see @fig-MNIST). Note that this projection was not used in the experiments as an embedding, and thus does not play any role in the clustering process itself. As a matter of fact, the embedding used was obtained with Principal Componant Analysis (PCA), $h = 32$ and $500$ Voronoï regions. Note that the label colors match the legend only in the case of the ground truth data. Indeed, the ordering of the labels have no significance on clustering quality. Importantly, Spectral Bridges demonstrates remarkable accuracy, with the exception of the classes representing digits "4" and "9", which appear to have been merged.
 
 ::: {#fig-MNIST layout-ncol=3}
 
