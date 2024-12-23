@@ -398,7 +398,7 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 
 ::: {#fig-mnist-pca-scores layout-nrow=2}
 
-![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.html)
+![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)
 
 | Metric  | Algorithm | h = 8             | h = 16            | h = 32            | h = 64            | h = 784 (full)    |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|
