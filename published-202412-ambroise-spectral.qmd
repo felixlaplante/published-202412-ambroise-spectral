@@ -47,7 +47,8 @@ draft: false # set to false once the build is running
 published: true # will be set to true once accepted
 format:
   computo-html: default 
-  computo-pdf:  default
+  computo-pdf:  
+    fig-pos: H
 editor: 
   markdown: 
     wrap: 72
@@ -157,7 +158,7 @@ $$
 
 It then follows that:
 $$
-\frac{\sum_{\boldsymbol{x_i} \in \mathcal{V}_k \cup \mathcal{V}_l} \alpha_i^2}{n_k + n_l} = \frac{\| \boldsymbol{\pi}_{kl}(X_{| k}) \|_F^2 + \| \boldsymbol{\pi}_{lk}(X_{| l}) \|_F^2}{(n_k + n_l) \| \boldsymbol{\mu}_k - \boldsymbol{\mu}_l \|^2}
+\frac{\sum_{\boldsymbol{x_i} \in \mathcal{V}_k \cup \mathcal{V}_l} \alpha_i^2}{n_k + n_l} = \frac{\| \boldsymbol{\pi}_{kl}(X_{| k}) \|_F^2 + \| \boldsymbol{\pi}_{lk}(X_{| l}) \|_F^2}{(n_k + n_l) \| \boldsymbol{\mu}_k - \boldsymbol{\mu}_l \|^2},
 $$
 where $\| \cdot \|_F$ is the Frobenius norm.
 
@@ -224,7 +225,7 @@ $${#eq-scaling}
 
 where $\gamma$ is a scaling factor. This factor is set to ensure a large enough separation between the final coefficients. This factor is determined by the equation:
 $$
-\gamma = \frac{log(𝑀)}{q_{90} - q_{10}}
+\gamma = \frac{log(𝑀)}{q_{90} - q_{10}},
 $$
 
 where $q_{10}$ and $q_{90}$ are respectively the 10th and 90th percentiles of the original affinity matrix and $M > 1$. Thus, since the transformation is order-preserving, the 90th percentile of the newly constructed matrix is $M$ times greater than the 10th percentile. By default, $M$ is arbitrarily set to a large value of $10^4$.
@@ -345,9 +346,7 @@ The algorithms are evaluated on both raw and Principal Component Analysis proces
 | Circles           | $2$   | $1000$  | $2$      | $50\%$, $50\%$                                                                            |
 | Smile             | $2$   | $1000$  | $4$      | $25\%$, $25\%$, $25\%$, $25\%$                                                            |
 
-Table: Datasets Summary & Class Balance
-
-Class proportions are presented in ascending order starting from label $0$.
+Table: Datasets Summary & Class Balance Class proportions are presented in ascending order starting from label $0$.
 
 
 ## Metrics
@@ -398,7 +397,12 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 
 ::: {#fig-mnist-pca-scores layout-nrow=2}
 
-![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).](figures/mnist_pca_summary.pdf)
+![](figures/mnist_pca_summary.pdf)
+
+Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics: k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).
+:::
+
+<!-- ::: {#fig-mnist-pca-scores-table} -->
 
 | Metric  | Algorithm | h = 8             | h = 16            | h = 32            | h = 64            | h = 784 (full)    |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|-------------------|
@@ -413,15 +417,19 @@ Let $h$ denote the embedding dimension of the dataset. Spectral Bridges was test
 |         | GIT       | $0.5110$          | $0.5720$          | $0.4227$          | $0.3314$          | $0.4297$          |
 |         | SB        | $\mathbf{0.6592}$ | $\mathbf{0.7616}$ | $\mathbf{0.7895}$ | $\mathbf{0.7846}$ | $\mathbf{0.7628}$ |
 
-Comparison of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
-:::
+Table: Comparison table of clustering algorithms on PCA embedded and full MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
+<!-- #::: -->
 
 Additionally, the proposed algorithm was evaluated on the MNIST dataset after reducing its dimensionality to $h \in \{2, 4, 8, 16\}$ using UMAP [@McInnes2018], a state-of-the-art nonlinear dimensionality reduction technique (see @fig-mnist-umap-scores). To enhance the clustering performance of Spectral Bridges, the normalized eigengap method was applied. This approach trains the algorithm with multiple initializations and determines the optimal number of Voronoï cells by selecting the configuration with the largest normalized eigengap (refer to @sec-hyp).
 
 ::: {#fig-mnist-umap-scores layout-nrow=2}
 
-![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).](figures/mnist_umap_summary.pdf)
+![](figures/mnist_umap_summary.pdf)
 
+Comparison  of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics: k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), Spectral Bridges (purple).
+:::
+
+<!-- ::: {#fig-mnist-umap-scores-table} -->
 | Metric  | Algorithm | h = 2             | h = 4             | h = 8             | h = 16            |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
 | **ARI** | KM        | $0.8154$          | $0.7971$          | $0.7985$          | $0.8160$          |
@@ -435,8 +443,8 @@ Additionally, the proposed algorithm was evaluated on the MNIST dataset after re
 |         | GIT       | $0.9081$          | $0.9172$          | $\mathbf{0.9183}$ | $0.9184$          |
 |         | SB        | $\mathbf{0.9182}$ | $\mathbf{0.9198}$ | $0.9125$          | $\mathbf{0.9214}$ |
 
-Comparison of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
-:::
+Table: Comparison table of clustering algorithms on UMAP embedded MNIST with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
+<!-- ::: -->
 
 Note the Spectral Bridges algorithm shines particularly even with quite simple dimension reduction algorithms.
 
@@ -457,8 +465,13 @@ The Spectral Bridges algorithm was also put to the test against the same competi
 
 :::{#fig-cancer-scores layout-nrow=2}
 
-![ARI and NMI scores of k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple) on the UCI Breast Cancer dataset.](figures/cancer_summary.pdf)
+![](figures/cancer_summary.pdf)
 
+
+Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics: k-means++ (pink), EM (green), Ward Clustering (red), GIT (blue), and Spectral Bridges (purple).
+:::
+
+<!-- :::{#fig-cancer-scores-table} -->
 | Metric  | Algorithm               | UCI Breast Cancer |
 |---------|-------------------------|-------------------|
 | **ARI** | KM                      | $0.6675$          |
@@ -472,8 +485,8 @@ The Spectral Bridges algorithm was also put to the test against the same competi
 |         | GIT                     | $0.2576$          |
 |         | SB                      | $0.5787$          |
 
-Comparison of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
-:::
+Table: Comparison table of clustering algorithms on the UCI Breast Cancer dataset with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
+<!-- ::: -->
 
 Since the Spectral Bridges algorithm is expected to excel at discerning complex and intricate cluster structures, an array of four toy datasets was collected, as illustrated in @fig-toy-datasets.
 
@@ -494,7 +507,12 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 
 ::: {#fig-synthetic-scores layout-nrow=2}
 
-![ARI and NMI scores of Spectral Bridges and competitors on standard synthetic toy datasets.](figures/synthetic_summary.pdf)
+![](figures/synthetic_summary.pdf)
+
+Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. 
+:::
+
+<!-- ::: {#fig-synthetic-scores-table} -->
 
 | Metric  | Algorithm | Impossible        | Moons             | Circles           | Smile             |
 |---------|-----------|-------------------|-------------------|-------------------|-------------------|
@@ -512,8 +530,8 @@ Multiple algorithms, including the proposed one, were benchmarked in the exact s
 |         | SB        | $\mathbf{0.9995}$ | $0.9787$          | $\mathbf{1.0000}$ | $\mathbf{1.0000}$ |
 
 
-Comparison of clustering algorithms on toy datasets with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
-:::
+Table: Comparison table of clustering algorithms on toy datasets with ARI and NMI metrics. The highest mean scores among tested algorithms are in bold.
+<!-- ::: -->
 
 ## Noise robustness
 
